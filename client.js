@@ -43,7 +43,7 @@ $(function(){
 
 		next.each(selectThisPage);
 	});
-
+/*
 	// enter to go to the URL of the selected service
 	$(document).bind('keyup','return',function(){
 		if ($('.selected').length)
@@ -62,10 +62,7 @@ $(function(){
 	}).bind('keydown','return',function(){
 		$('.selected').css('position','relative').css('top','2px');
 	});
-	
-	message('Choose a service with left and right keys');
-
-	$('#description').hide().fadeIn().text('');
+*/	
 });
 
 // create elements representing pages
@@ -126,19 +123,5 @@ function selectThisPage()
 	$(this).addClass('selected');
 }
 
-// hints to the user, non-intrusively
-function message(text){
-	//console.log(text);
 
-	// prevent text() from returning anything nasty
-	if (!text) text = '';
-	
-	// get height of message for animation
-	var height = $('#message').height();
-
-	$('#message').animate({bottom:"-20px"},100,'swing',function(){
-		$(this).text(text).animate({bottom:0});			
-	});
-	//$('#message').text(text);			
-}
-// Copyright Callan Bryant 2011 <callan.bryant@gmail.com> http://callanbryant.co.uk
+// Copyright Callan Bryant 2011-2012 <callan.bryant@gmail.com> http://callanbryant.co.uk
