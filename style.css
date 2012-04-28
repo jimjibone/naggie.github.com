@@ -74,7 +74,7 @@ nav a:hover
 color:white;
 }
 
-article
+.container
 {
 position:absolute;
 top:470px;
@@ -91,7 +91,7 @@ float:right;
 margin-left:30px;
 }
 
-.full-article{
+article{
 padding:20px;
 text-align:left;
 border-left:2px solid black;
