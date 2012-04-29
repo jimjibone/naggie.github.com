@@ -1,5 +1,3 @@
-@hotkey V
-
 ** For the interim, vosbox is currently closed-source due to a business deal**
 
 **vosbox is a HTML5 PHP/jQuery based jukebox.**
