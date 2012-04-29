@@ -99,6 +99,15 @@ border-left:2px solid black;
 border-right:2px solid black;
 }
 
+article.default{
+/*
+no JS? Just show main article. Better than nothing
+This assumes that the default article is already there
+*/
+display:block;
+}
+
+
 footer{
 font-style:italic;
 text-align:center;

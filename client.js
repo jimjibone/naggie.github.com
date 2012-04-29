@@ -1,4 +1,4 @@
-// Copyright Callan Bryant 2011 <callan.bryant@gmail.com> http://callanbryant.co.uk
+{// Copyright Callan Bryant 2011 <callan.bryant@gmail.com> http://callanbryant.co.uk
 $(function(){
 	generateNav();
 	loadArticles();
