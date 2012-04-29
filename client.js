@@ -1,4 +1,4 @@
-{// Copyright Callan Bryant 2011 <callan.bryant@gmail.com> http://callanbryant.co.uk
+// Copyright Callan Bryant 2011 <callan.bryant@gmail.com> http://callanbryant.co.uk
 $(function(){
 	generateNav();
 	loadArticles();
@@ -36,26 +36,18 @@ $(function(){
 
 		next.each(loadThisArticle);
 	});
-/*
+
 	// enter to go to the URL of the selected service
 	$(document).bind('keyup','return',function(){
-		if ($('.selected').length)
-		{
-			var name = $('.selected').text();
-			var url  = $('.selected').data('url');
-			message();
-
+		$('nav a.selected').each(function(){
 			// restore postion
 			$('.selected').css('top',0);
-
-			// stays this way if browser goes back to the page
-			//$('nav').text("Loading "+name+"...");
-			document.location = url;
-		}
+			// do something else using selected nav link or attachedarticle
+		});
 	}).bind('keydown','return',function(){
 		$('.selected').css('position','relative').css('top','2px');
 	});
-*/	
+	
 });
 
 // create elements representing pages
