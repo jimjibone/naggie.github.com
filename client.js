@@ -1,8 +1,13 @@
 // Copyright Callan Bryant 2011-2012 <callan.bryant@gmail.com> http://callanbryant.co.uk
 // All rights reserved.
 $(function(){
+	// apply loading gif to each external article prior to load.
+	$('article[data-src]').html('<div class="throbber"></div>');
+
+	// grace time to allow whatever to load first
+	setTimeout(loadArticles,1000);
+
 	generateNav();
-	loadArticles();
 
 	$('#backdrop > img').hide().bind("load",function(){
 		$(this).fadeIn(3500);
@@ -88,9 +93,6 @@ function loadThisArticle()
 
 // loads all articles. Maybe on demand later, if the site grows too much.
 function loadArticles(){
-	// apply loading gif to each
-	$('article[data-src]').html('<div class="throbber"></div>');
-
 	$('article[data-src]').each(function(i,art){
 		art = $(art);
 		
