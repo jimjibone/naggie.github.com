@@ -111,6 +111,13 @@ function loadArticles(){
 			}
 		});
 	});
+	
+	// select inline markdown
+	$('article[data-language="text/x-web-markdown"]:not(article[data-src])').each(function(i,art){
+		var html = $(art).html();
+		html = converter.makeHtml(html);
+		$(art).html(html);
+	});
 }
 
 // Copyright Callan Bryant 2011-2012 <callan.bryant@gmail.com> http://callanbryant.co.uk
