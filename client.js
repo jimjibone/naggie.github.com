@@ -100,8 +100,10 @@ function loadThisArticle()
 	// select this service
 	$(this).addClass('selected');
 
-	// update hash location (if selected, not clicked)
-	document.location.hash = $(this).attr('href');
+	// update hash location (when selected, not clicked)
+	// also only give the default article a hash if explicitly selected
+	if( !$(this).data('article').hasClass('default') || document.location.hash)
+		document.location.hash = $(this).attr('href');
 }
 
 // loads all articles. Maybe on demand later, if the site grows too much.
