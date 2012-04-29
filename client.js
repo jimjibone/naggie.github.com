@@ -70,7 +70,7 @@ function generateNav()
 
 		var el = $("<a />").addClass('service');
 		el.text(art.data('name'));
-		el.appendTo('nav').hide().fadeIn();
+		el.appendTo('nav');
 		el.click(loadThisArticle);
 
 		// attach reference to element so it can be shown later
