@@ -5,8 +5,7 @@ $(function(){
 	// apply loading gif to each external article prior to load.
 	$('article[data-src]').html('<div class="throbber"></div>');
 
-	// grace time to allow whatever to load first
-	setTimeout(loadArticles,1000);
+	loadArticles();
 
 	generateNav();
 
@@ -66,6 +65,9 @@ function generateNav()
 		// jquery-ify
 		art = $(art);
 
+		// safe URL hash for link
+		var hash = '#'+art.data('name').replace(/[^0-9a-z]+/gi,'-');
+
 		var el = $("<a />").addClass('service');
 		el.text(art.data('name'));
 		el.appendTo('nav').hide().fadeIn();
@@ -74,7 +76,14 @@ function generateNav()
 		// attach reference to element so it can be shown later
 		el.data('article',art);
 
-		if (art.hasClass('default'))
+		// attach link
+		el.attr('href',hash);
+		
+		if(document.location.hash == hash)
+			el.each(loadThisArticle);
+
+		// no hash or empty hash
+		if (art.hasClass('default') && document.location.hash.length <=1)
 			el.each(loadThisArticle);
 	});
 }
