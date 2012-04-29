@@ -99,6 +99,9 @@ function loadThisArticle()
 	$('nav .service').removeClass('selected');
 	// select this service
 	$(this).addClass('selected');
+
+	// update hash location (if selected, not clicked)
+	document.location.hash = $(this).attr('href');
 }
 
 // loads all articles. Maybe on demand later, if the site grows too much.
