@@ -123,10 +123,13 @@ margin:50px;
 {
 color:white;
 text-transform:uppercase;
-font-size:40px;
 padding:130px 0 0 0;
 letter-spacing:10px;
 opacity:0.8;
+}
+
+#logo h1{
+font-size:40px;
 }
 
 a
