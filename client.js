@@ -13,7 +13,18 @@ $(function(){
 		$(this).fadeIn(3500);
 	});
 
-	$('#contact').delay(5000).hide().fadeIn();
+	$('#contact').hide();
+
+
+	var contactTimeout = setTimeout(function(){
+		$('#contact').hide().fadeIn();
+	},5000);
+
+	$(window).one('scroll',function(){
+		clearTimeout(contactTimeout);
+		$('#contact').fadeIn();
+	});
+
 
 	// IE9 hack
 	// the load event does not always fire due to caching, 
