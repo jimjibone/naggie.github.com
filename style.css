@@ -1,4 +1,7 @@
-/* Copyright Callan Bryant 2011 <callan.bryant@gmail.com> callanbryant.co.uk */
+/*
+Copyright Callan Bryant 2011-2012 <callan.bryant@gmail.com> http://callanbryant.co.uk
+All rights reserved.
+*/
 html {height:101%;}
 body
 {
@@ -12,6 +15,7 @@ div#contact{
 position:fixed;
 top:0;
 width:100%;
+background:black; /*fallback for IE*/
 background:rgba(0,0,0,0.7);
 color:white;
 padding:5px;
