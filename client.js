@@ -122,6 +122,8 @@ function loadArticles(){
 					html = converter.makeHtml(html);
 					
 				art.html(html);
+				// syntax highlighting
+				$('pre code',art).each(function(i, e) {hljs.highlightBlock(e)});
 			}
 		});
 	});
@@ -132,6 +134,8 @@ function loadArticles(){
 		html = converter.makeHtml(html);
 		$(art).html(html);
 	});
+	// syntax highlighting of inline articles
+	$('article pre code').each(function(i, e) {hljs.highlightBlock(e)});
 }
 
 // Copyright Callan Bryant 2011-2012 <callan.bryant@gmail.com> http://callanbryant.co.uk

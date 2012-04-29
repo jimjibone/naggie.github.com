@@ -162,3 +162,7 @@ width:100%;
 height:64px;
 background:url('Ajax-loader.gif') no-repeat center center;
 }
+
+pre code{
+font-size:14px;
+}
