@@ -23,4 +23,3 @@ uol
 php
 
 
-tooltip integration (tipsy) or css arrows for tabs

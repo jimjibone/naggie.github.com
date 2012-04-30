@@ -60,6 +60,7 @@ width:100%;
 nav a.service
 {
 color:#ccc;
+position:relative;
 text-decoration:none;
 text-transform:uppercase;
 padding:20px 20px 15px 20px;
@@ -76,6 +77,19 @@ background:#000;
 nav a:hover
 {
 color:white;
+}
+
+nav a.selected:after
+{
+content:' ';
+height:0;
+position:absolute;
+width:0;
+top:100%;
+margin-left:-10px;
+left:50%;
+border:10px solid transparent;
+border-top-color:black;
 }
 
 .articles
