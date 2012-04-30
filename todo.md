@@ -22,4 +22,9 @@ css3
 uol
 php
 
+integrate linkedin
 
+blog with chyrp or wheat
+
+
+make adaptive with adapt.js, making top links blocks, removing banner, etc
