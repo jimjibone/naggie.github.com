@@ -17,6 +17,7 @@ to show a 128x128 icon, as a preview
 # Logos
   * node  * 
 bcrm
+git
 html5
 css3
 uol
