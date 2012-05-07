@@ -36,33 +36,33 @@ $(function(){
 
 	// left/right select service
 	$(document).bind('keydown',"right",function(){
-		// check to see if a service has been selected
-		if (!$('.service').hasClass('selected'))
+		// check to see if a service has been active
+		if (!$('.service').hasClass('active'))
 			var next = $('.service').first();
 		else
-			var next = $('.selected').next();
+			var next = $('.active').next();
 
 		next.each(loadThisArticle);
 	});
 	$(document).bind('keydown',"left",function(){
-	// check to see if a service has been selected
-		if (!$('.service').hasClass('selected'))
+	// check to see if a service has been active
+		if (!$('.service').hasClass('active'))
 			var next = $('.service').first();
 		else
-			var next = $('.selected').prev();
+			var next = $('.active').prev();
 
 		next.each(loadThisArticle);
 	});
 
-	// enter to go to the URL of the selected service
+	// enter to go to the URL of the active service
 	$(document).bind('keyup','return',function(){
-		$('nav a.selected').each(function(){
+		$('nav a.active').each(function(){
 			// restore postion
-			$('.selected').css('top',0);
-			// do something else using selected nav link or attachedarticle
+			$('.active').css('top',0);
+			// do something else using active nav link or attachedarticle
 		});
 	}).bind('keydown','return',function(){
-		$('.selected').css('position','relative').css('top','2px');
+		$('.active').css('position','relative').css('top','2px');
 	});
 	
 });
@@ -106,13 +106,13 @@ function loadThisArticle()
 	// show this one
 	$(this).data('article').show().text();
 
-	// clear selected on all other service
-	$('nav .service').removeClass('selected');
+	// clear active on all other service
+	$('nav .service').removeClass('active');
 	// select this service
-	$(this).addClass('selected');
+	$(this).addClass('active');
 
-	// update hash location (when selected, not clicked)
-	// also only give the default article a hash if explicitly selected
+	// update hash location (when active, not clicked)
+	// also only give the default article a hash if explicitly active
 	if( !$(this).data('article').hasClass('default') || document.location.hash)
 		document.location.hash = $(this).attr('href');
 }
