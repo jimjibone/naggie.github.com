@@ -67,3 +67,6 @@ o
 RSS
 
  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://gimp.lisanet.de/Website/News/rss.xml" />
+
+
+make font css self contained
