@@ -44,3 +44,26 @@ dynamic JS loading: eg only load syntax highlighter when code is there
 
 
 blog with syntication for export to fb or t and li
+starred items RSS feed
+logos fadein on load:
+
+Items in list form should always be in <ul>, <ol>, or <dl>, Never a set of <div> or <p> nav
+
+
+no ;
+
+
+highlight/link keywords
+
+font/placement
+
+
+id to anything within an article should be overriden so it works
+
+
+for blog: regarding game engines and open source
+o 
+
+RSS
+
+ <link rel="alternate" type="application/rss+xml" title="RSS" href="http://gimp.lisanet.de/Website/News/rss.xml" />
