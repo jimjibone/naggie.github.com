@@ -2,6 +2,17 @@
 Copyright Callan Bryant 2011-2012 <callan.bryant@gmail.com> http://callanbryant.co.uk
 All rights reserved.
 */
+
+
+/*
+@font-face {
+  font-family: 'Josefin Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Josefin Sans Bold'), local('JosefinSans-Bold'), url('josefinsans-bold.woff') format('woff');
+}
+*/
+/* force scrollbar */
 html {height:101%;}
 body
 {
