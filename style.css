@@ -71,7 +71,11 @@ width:100%;
 
 nav a.service
 {
-color:#ccc;
+color:#999;
+-webkit-transition:color .25s;
+transition:color .25s;
+-ms-transition:color .25s;
+-moz-transition:color .25s;
 position:relative;
 text-decoration:none;
 text-transform:uppercase;
