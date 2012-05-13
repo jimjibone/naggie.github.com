@@ -4,14 +4,14 @@ All rights reserved.
 */
 
 
-/*
 @font-face {
   font-family: 'Josefin Sans';
   font-style: normal;
   font-weight: 700;
-  src: local('Josefin Sans Bold'), local('JosefinSans-Bold'), url('josefinsans-bold.woff') format('woff');
+  /*src: local('Josefin Sans Bold'), local('JosefinSans-Bold'), url('josefinsans-bold.woff') format('woff');*/
+  src: local('Josefin Sans Bold'), local('JosefinSans-Bold'), url('http://themes.googleusercontent.com/static/fonts/josefinsans/v3/C6HYlRF50SGJq1XyXj04zxAPw1J91axKNXP_-QX9CC8.woff') format('woff');
 }
-*/
+
 /* force scrollbar */
 html {height:101%;}
 body
