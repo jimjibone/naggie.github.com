@@ -1,4 +1,5 @@
-font to helvetica or something
+# Ideas, may or may not be implemented.
+
 attribute libs
 load on demand option
 mobile site
@@ -75,5 +76,15 @@ make font css self contained
 $('#logo #quote').css('position','relative').animate({top:100,opacity:0},'slow');$('#logo h1').css('position','relative').animate({bottom:100},500)
 
 
-blog like gmail blog dynamic layout?
+blog like gmail blog dynamic layout? simply a sub articles thing
+using jquery-plugin-ified article engine
 
+
+changing header on mouseover and choose
+
+-OR-
+
+RSS mimetype option for article loafer
+with simple cron/wget local downloader, also for starred items
+
+https://github.com/jfhovinne/jFeed
