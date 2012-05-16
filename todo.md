@@ -73,3 +73,7 @@ make font css self contained
 
 
 $('#logo #quote').css('position','relative').animate({top:100,opacity:0},'slow');$('#logo h1').css('position','relative').animate({bottom:100},500)
+
+
+blog like gmail blog dynamic layout?
+
