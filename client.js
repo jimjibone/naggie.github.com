@@ -79,23 +79,26 @@ function generateNav()
 		// safe URL hash for link
 		var hash = '#'+art.data('name').replace(/[^0-9a-z]+/gi,'-');
 
-		var el = $("<a />").addClass('service');
-		el.text(art.data('name'));
-		el.appendTo('nav');
-		el.click(loadThisArticle);
+		var link= $("<a />").addClass('service');
+		link.text(art.data('name'));
+		link.appendTo('nav');
+		link.click(loadThisArticle);
 
 		// attach reference to element so it can be shown later
-		el.data('article',art);
+		link.data('article',art);
 
 		// attach link
-		el.attr('href',hash);
-		
+		link.attr('href',hash);
+
+		// title (to be made nice with bootstrap tooltips or tipsy)
+		link.attr('title', art.data('hint') );		
+
 		if(document.location.hash == hash)
-			el.each(loadThisArticle);
+			link.each(loadThisArticle);
 
 		// no hash or empty hash
 		if (art.hasClass('default') && document.location.hash.length <=1)
-			el.each(loadThisArticle);
+			link.each(loadThisArticle);
 	});
 }
 
