@@ -1,16 +1,19 @@
 // Copyright Callan Bryant 2011-2012 <callan.bryant@gmail.com> http://callanbryant.co.uk
 // All rights reserved.
+
+// TODO: allow targeting only some articles.
+
 var converter = new Showdown.converter();
 $(function(){
-	// apply loading gif to each external article prior to load.
+	// apply loading gif to each external external article prior to load.
 	$('article[data-src]').html('<div class="throbber"></div>');
-
-	loadArticles();
 
 	generateNav();
 
 	$('#backdrop > img').hide().bind("load",function(){
 		$(this).fadeIn(3500);
+		// now is a good time to preload any articles
+		preloadArticles();
 	});
 
 	$('#contact').hide();
@@ -42,7 +45,7 @@ $(function(){
 		else
 			var next = $('.active').next();
 
-		next.each(loadThisArticle);
+		next.each(showThisArticle);
 	});
 	$(document).bind('keydown',"left",function(){
 	// check to see if a service has been active
@@ -51,7 +54,7 @@ $(function(){
 		else
 			var next = $('.active').prev();
 
-		next.each(loadThisArticle);
+		next.each(showThisArticle);
 	});
 
 	// enter to go to the URL of the active service
@@ -82,7 +85,7 @@ function generateNav()
 		var link= $("<a />").addClass('service');
 		link.text(art.data('name'));
 		link.appendTo('nav');
-		link.click(loadThisArticle);
+		link.click(showThisArticle);
 
 		// attach reference to element so it can be shown later
 		link.data('article',art);
@@ -94,15 +97,16 @@ function generateNav()
 		link.attr('title', art.data('hint') );		
 
 		if(document.location.hash == hash)
-			link.each(loadThisArticle);
+			link.each(showThisArticle);
 
 		// no hash or empty hash
 		if (art.hasClass('default') && document.location.hash.length <=1)
-			link.each(loadThisArticle);
+			link.each(showThisArticle);
 	});
 }
 
-function loadThisArticle()
+// show article, given nav link in 'this' context
+function showThisArticle()
 {
 	// hide all other articles
 	$('article').hide();
@@ -111,20 +115,36 @@ function loadThisArticle()
 
 	// clear active on all other service
 	$('nav .service').removeClass('active');
-	// select this service
+	// select this link 
 	$(this).addClass('active');
 
 	// update hash location (when active, not clicked)
 	// also only give the default article a hash if explicitly active
 	if( !$(this).data('article').hasClass('default') || document.location.hash)
 		document.location.hash = $(this).attr('href');
+
+	// need to init?
+	//if ( !$(this).data('article').data('ready') )
+		initArticle( $(this).data('article') )
 }
 
-// loads all articles. Maybe on demand later, if the site grows too much.
-function loadArticles(){
-	$('article[data-src]').each(function(i,art){
-		art = $(art);
-		
+function preloadArticles(){
+	$('article[data-preload]').each(function(){
+		initArticle($(this));
+	});
+}
+
+// initialise the article, given the mathing jQuery object
+function initArticle(art){
+	// only want to call this once...
+	if (art.data('ready'))
+		return false;
+
+	// set flag so function is not called again
+	art.data('ready',true);
+	
+	// external HTML fragment, markdown or (soon) RSS
+	if ( art.data('src') ){
 		$.ajax({
 			url: art.data('src'),
 			error:function(){
@@ -140,16 +160,16 @@ function loadArticles(){
 				$('pre code',art).each(function(i, e) {hljs.highlightBlock(e)});
 			}
 		});
-	});
-	
-	// select inline markdown
-	$('article[data-language="text/x-web-markdown"]:not(article[data-src])').each(function(i,art){
+	}	
+	// inline markdown
+	else if(art.data('language') == 'text/x-web-markdown'){
 		var html = $(art).html();
 		html = converter.makeHtml(html);
 		$(art).html(html);
-	});
+	}
+
 	// syntax highlighting of inline articles
-	$('article pre code').each(function(i, e) {hljs.highlightBlock(e)});
+	$('pre code',art).each(function(i, e) {hljs.highlightBlock(e)});
 }
 
 // Copyright Callan Bryant 2011-2012 <callan.bryant@gmail.com> http://callanbryant.co.uk
