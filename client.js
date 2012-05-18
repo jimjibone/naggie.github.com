@@ -152,10 +152,10 @@ function initArticle(art){
 			},
 			dataType: 'html',
 			success: function(html){
-				if (art.data('language') == 'text/x-web-markdown')
+				if (art.data('type') == 'text/x-web-markdown')
 					html = converter.makeHtml(html);
-				if (art.data('language') == 'application/rss+xml'
-					||  art.data('language') == 'application/atom+xml')
+				if (art.data('type') == 'application/rss+xml'
+					||  art.data('type') == 'application/atom+xml')
 					html = rss2html(html);
 		
 				art.html(html);
@@ -165,7 +165,7 @@ function initArticle(art){
 		});
 	}	
 	// inline markdown
-	else if(art.data('language') == 'text/x-web-markdown'){
+	else if(art.data('type') == 'text/x-web-markdown'){
 		var html = $(art).html();
 		html = converter.makeHtml(html);
 		$(art).html(html);
