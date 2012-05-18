@@ -154,7 +154,10 @@ function initArticle(art){
 			success: function(html){
 				if (art.data('language') == 'text/x-web-markdown')
 					html = converter.makeHtml(html);
-					
+				if (art.data('language') == 'application/rss+xml'
+					||  art.data('language') == 'application/atom+xml')
+					html = rss2html(html);
+		
 				art.html(html);
 				// syntax highlighting
 				$('pre code',art).each(function(i, e) {hljs.highlightBlock(e)});
@@ -172,5 +175,97 @@ function initArticle(art){
 	$('pre code',art).each(function(i, e) {hljs.highlightBlock(e)});
 }
 
+
+// given a string rss it must return some html... 
+function rss2html(rss){
+	var xml = $($.parseXML(rss));
+
+	var items = [];
+
+	// RSS or ATOM
+	xml.find("item,entry").each(function(){
+		var child = $(this);
+		var item = {
+			title: child.find("title").first().text(),
+			link: child.find("link").text(),
+			description: child.find("description,summary").text(),
+			date: child.find("pubDate,updated").text(),
+			author: child.find("author").text()
+		}
+		items.push(item);
+	})
+
+	var html = $('<div class="rss"></div>');
+
+	for (var i in items){
+		var post = $('<div class="post"><div class="meta"></div><div class="content"></div></div>');
+		$('.meta',post).append('<h2><a href="'+items[i].link+'">'+items[i].title+'</a></h2>');
+
+		var date = new Date(items[i].date);
+		date = relativeDate(date);
+
+		$('.meta h2',post).append('<span class="date">'+date+'</span>');
+
+		$('.content',post).append(items[i].description);
+	
+
+		html.append(post).append('<hr />');
+	}
+
+	return html;
+}
+
 // Copyright Callan Bryant 2011-2012 <callan.bryant@gmail.com> http://callanbryant.co.uk
 // All rights reserved.
+
+// from https://github.com/azer/relative-date/blob/master/lib/relative-date.js
+var relativeDate = (function(undefined){
+
+  var SECOND = 1000,
+      MINUTE = 60 * SECOND,
+      HOUR = 60 * MINUTE,
+      DAY = 24 * HOUR,
+      WEEK = 7 * DAY,
+      YEAR = DAY * 365,
+      MONTH = YEAR / 12;
+
+  var formats = [
+    [ 0.7 * MINUTE, 'just now' ],
+    [ 1.5 * MINUTE, 'a minute ago' ],
+    [ 60 * MINUTE, 'minutes ago', MINUTE ],
+    [ 1.5 * HOUR, 'an hour ago' ],
+    [ DAY, 'hours ago', HOUR ],
+    [ 2 * DAY, 'yesterday' ],
+    [ 7 * DAY, 'days ago', DAY ],
+    [ 1.5 * WEEK, 'a week ago'],
+    [ MONTH, 'weeks ago', WEEK ],
+    [ 1.5 * MONTH, 'a month ago' ],
+    [ YEAR, 'months ago', MONTH ],
+    [ 1.5 * YEAR, 'a year ago' ],
+    [ Number.MAX_VALUE, 'years ago', YEAR ]
+  ];
+
+  function relativeDate(input,reference){
+    !reference && ( reference = (new Date).getTime() );
+    reference instanceof Date && ( reference = reference.getTime() );
+    input instanceof Date && ( input = input.getTime() );
+    
+    var delta = reference - input,
+        format, i, len;
+
+    for(i = -1, len=formats.length; ++i < len; ){
+      format = formats[i];
+      if(delta < format[0]){
+        return format[2] == undefined ? format[1] : Math.round(delta/format[2]) + ' ' + format[1];
+      }
+    };
+  }
+
+  return relativeDate;
+
+})();
+
+if(typeof module != 'undefined' && module.exports){
+  module.exports = relativeDate;
+}
+

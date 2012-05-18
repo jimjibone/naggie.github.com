@@ -197,3 +197,20 @@ background:url('Ajax-loader.gif') no-repeat center center;
 pre code{
 font-size:14px;
 }
+
+.rss .h2{
+display:inline;
+}
+
+.rss .date{
+display:inline;
+color:gray;
+font-style:italic;
+font-weight:normal;
+font-size:12px;
+margin-left:12px;
+}
+
+.rss img{
+float:none;
+}

@@ -1,5 +1,7 @@
 # Ideas, may or may not be implemented.
 
+HTML5 all tags for sematics (article to section?)
+
 attribute libs
 load on demand option
 mobile site
@@ -62,3 +64,9 @@ or amke own like
  81         $('article').append(html);
  82     });
  83 });
+
+
+HINT TO ARTICLE HEADER
+
+
+relative dates for rss (auto update?)
