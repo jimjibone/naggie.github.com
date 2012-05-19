@@ -91,6 +91,10 @@ function generateNav()
 		link.appendTo('nav');
 		link.click(showThisArticle);
 
+		link.one('mouseenter',function(){
+			initArticle(art);
+		});
+
 		// attach reference to element so it can be shown later
 		link.data('article',art);
 
@@ -147,6 +151,8 @@ function initArticle(art){
 	// only want to call this once...
 	if (art.data('ready'))
 		return false;
+
+	console.log('init',art.data('name'));
 
 	// set flag so function is not called again
 	art.data('ready',true);
