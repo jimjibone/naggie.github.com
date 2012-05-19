@@ -28,3 +28,5 @@ jfeed/node based RSS proxy with application/rss+jsonp integration or transparent
 fix navbar height in XP/chrome
 fix compatability mode in IE 7/8
 use css3 to replace some js animations
+make feed images nice, maybe like polaroids
+MIME types to people types. Eg: x-web/markdown to just markdown. lol.
