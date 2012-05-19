@@ -213,5 +213,6 @@ margin-left:12px;
 
 .rss img{
 float:none;
-max-width:640px;
+max-width:480px;
+display:block;
 }

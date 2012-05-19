@@ -47,26 +47,7 @@ changing header on mouseover and choose
 RSS mimetype option for article loafer
 with simple cron/wget local downloader, also for starred items
 
-or amke own like
- 68 $.get('starred.rss', function(data) {
- 69     var $xml = $(data);
- 70     $xml.find("item,entry").each(function() {
- 71         var $this = $(this),
- 72             item = {
- 73                 title: $this.find("title").text(),
- 74                 link: $this.find("link").text(),
- 75                 description: $this.find("description,summary").text(),
- 76                 pubDate: $this.find("pubDate").text(),
- 77                 author: $this.find("author").text()
- 78         }
- 79 
- 80         var html = '<h2>'+item.title+'</h2><p>'+item.description+'</p>'
- 81         $('article').append(html);
- 82     });
- 83 });
-
-
-HINT TO ARTICLE HEADER
+HINT TO ARTICLE HEADERi, or auto header based on feed description etc
 
 
 relative dates for rss (auto update?)

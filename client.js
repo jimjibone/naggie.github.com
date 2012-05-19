@@ -143,26 +143,35 @@ function initArticle(art){
 	// set flag so function is not called again
 	art.data('ready',true);
 	
-	// external HTML fragment, markdown or (soon) RSS
+	// external HTML fragment, markdown
 	if ( art.data('src') ){
-		$.ajax({
-			url: art.data('src'),
-			error:function(){
-				art.text('Error retrieving article.');
-			},
-			dataType: 'html',
-			success: function(html){
-				if (art.data('type') == 'text/x-web-markdown')
-					html = converter.makeHtml(html);
-				if (art.data('type') == 'application/rss+xml'
-					||  art.data('type') == 'application/atom+xml')
-					html = rss2html(html);
-		
-				art.html(html);
-				// syntax highlighting
-				$('pre code',art).each(function(i, e) {hljs.highlightBlock(e)});
-			}
-		});
+		if (art.data('type') == 'application/rss+xml' ||  art.data('type') == 'application/atom+xml')
+			$.getFeed({
+				url: art.data('src'),
+				error:function(){
+					art.text('Error retreiving feed');
+				},
+				success:function(feed){
+					var html = feed2html(feed);
+					art.html(html);
+				}
+			})
+		else
+			$.ajax({
+				url: art.data('src'),
+				error:function(){
+					art.text('Error retrieving article.');
+				},
+				dataType: 'html',
+				success: function(html){
+					if (art.data('type') == 'text/x-web-markdown')
+						html = converter.makeHtml(html);
+			
+					art.html(html);
+					// syntax highlighting
+					$('pre code',art).each(function(i, e) {hljs.highlightBlock(e)});
+				}
+			});
 	}	
 	// inline markdown
 	else if(art.data('type') == 'text/x-web-markdown'){
@@ -177,36 +186,19 @@ function initArticle(art){
 
 
 // given a string rss it must return some html... 
-function rss2html(rss){
-	var xml = $($.parseXML(rss));
-
-	var items = [];
-
-	// RSS or ATOM
-	xml.find("item,entry").each(function(){
-		var child = $(this);
-		var item = {
-			title: child.find("title").first().text(),
-			link: child.find("link").text(),
-			description: child.find("description,summary").text(),
-			date: child.find("pubDate,updated").text(),
-			author: child.find("author").text()
-		}
-		items.push(item);
-	})
-
+function feed2html(feed){
 	var html = $('<div class="rss"></div>');
 
-	for (var i in items){
+	for (var i in feed.items){
 		var post = $('<div class="post"><div class="meta"></div><div class="content"></div></div>');
-		$('.meta',post).append('<h2><a href="'+items[i].link+'">'+items[i].title+'</a></h2>');
+		$('.meta',post).append('<h2><a href="'+feed.items[i].link+'">'+feed.items[i].title+'</a></h2>');
 
-		var date = new Date(items[i].date);
+		var date = new Date(feed.items[i].updated);
 		date = relativeDate(date);
 
 		$('.meta h2',post).append('<span class="date">'+date+'</span>');
 
-		$('.content',post).append(items[i].description);
+		$('.content',post).append(feed.items[i].description);
 	
 
 		html.append(post).append('<hr />');
