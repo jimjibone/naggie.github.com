@@ -25,3 +25,5 @@ google reader style auto-mark-read via guid in html5storage
 section support for plugin
 up/down to next article
 jfeed/node based RSS proxy with application/rss+jsonp integration or transparent RSSloading
+fix navbar height in XP/chrome
+fix compatability mode in IE 7/8
