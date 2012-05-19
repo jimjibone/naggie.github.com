@@ -25,7 +25,7 @@ $(function(){
 
 	var contactTimeout = setTimeout(function(){
 		$('#contact').hide().fadeIn();
-	},5000);
+	},6000);
 
 	$(window).one('scroll',function(){
 		clearTimeout(contactTimeout);
