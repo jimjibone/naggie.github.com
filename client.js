@@ -204,6 +204,8 @@ function feed2html(feed){
 
 		$('.meta h2',post).append('<span class="date">'+date+'</span>');
 
+		$('.meta',post).append('<div class="ref">'+feed.items[i].link.replace(/http:\/\//,'').match(/[a-z0-9\.]+/i)+'</div>');
+
 		$('.content',post).append(feed.items[i].description);
 	
 

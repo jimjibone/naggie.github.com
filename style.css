@@ -220,12 +220,16 @@ display:inline;
 }
 
 .rss .date{
-display:inline;
 color:gray;
 font-style:italic;
 font-weight:normal;
 font-size:12px;
 margin-left:12px;
+}
+
+.rss .ref{
+color:gray;
+margin-bottom:12px;
 }
 
 .rss img{
