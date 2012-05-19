@@ -41,7 +41,6 @@ font/placement
 id to anything within an article should be overriden so it works
 for blog: regarding game engines and open source
 RSS
- <link rel="alternate" type="application/rss+xml" title="RSS" href="http://gimp.lisanet.de/Website/News/rss.xml" />
 $('#logo #quote').css('position','relative').animate({top:100,opacity:0},'slow');$('#logo h1').css('position','relative').animate({bottom:100},500)
 changing header on mouseover and choose
 RSS mimetype option for article loafer
