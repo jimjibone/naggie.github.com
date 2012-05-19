@@ -27,3 +27,4 @@ up/down to next article
 jfeed/node based RSS proxy with application/rss+jsonp integration or transparent RSSloading
 fix navbar height in XP/chrome
 fix compatability mode in IE 7/8
+use css3 to replace some js animations
