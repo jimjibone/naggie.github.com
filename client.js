@@ -18,10 +18,20 @@ $(function(){
 
 	$('#contact').hide();
 
-	setTimeout(function(){
-		$('#logo .quote').fadeOut();
-		$('#logo h1').animate({'margin-top':'50px'})
-	},4000);
+	var hideQuote = function(){
+		$('#logo .quote').stop().fadeOut();
+		$('#logo h1').stop().animate({'margin-top':'50px'})
+	};
+
+	setTimeout(hideQuote,4000);
+	$('#logo').bind('mouseleave',hideQuote);
+
+	$('#logo').bind('mouseenter',function(){
+		$('#logo .quote').stop().fadeIn();
+		$('#logo h1').stop().animate({'margin-top':'26px'})
+	});
+
+	
 
 	var contactTimeout = setTimeout(function(){
 		$('#contact').hide().fadeIn();
