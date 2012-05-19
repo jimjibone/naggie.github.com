@@ -228,6 +228,7 @@ margin-left:12px;
 }
 
 .rss .ref{
+display:none;
 color:gray;
 margin-bottom:12px;
 }
