@@ -131,15 +131,9 @@ top:-50px;
 width:100%;
 font-family:'Josefin Sans';
 text-align:center;
-font-size:24px;
-}
-
-.articles header:before {
-content: '\201C';
-}
-
-.articles header:after {
-content: '\201D';
+font-size:20px;
+text-transform:uppercase;
+color:gray;
 }
 
 article{
