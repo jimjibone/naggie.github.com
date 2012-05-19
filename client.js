@@ -18,6 +18,10 @@ $(function(){
 
 	$('#contact').hide();
 
+	setTimeout(function(){
+		$('#logo .quote').fadeOut();
+		$('#logo h1').animate({'margin-top':'50px'})
+	},4000);
 
 	var contactTimeout = setTimeout(function(){
 		$('#contact').hide().fadeIn();
