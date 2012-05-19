@@ -19,11 +19,8 @@ logos fadein on load:
 Items in list form should always be in <ul>, <ol>, or <dl>, Never a set of <div> or <p> nav
 highlight/link keywords
 id to anything within an article should be overriden so it works
-$('#logo #quote').css('position','relative').animate({top:100,opacity:0},'slow');$('#logo h1').css('position','relative').animate({bottom:100},500)
-
-HINT TO ARTICLE HEADERi, or auto header based on feed description etc
-
 auto update relative date every so often
 for blog: regarding game engines and open source
-
+google reader style auto-mark-read via guid in html5storage
 section support for plugin
+up/down to next article
