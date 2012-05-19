@@ -94,7 +94,7 @@ function generateNav()
 		link.attr('href',hash);
 
 		// title (to be made nice with bootstrap tooltips or tipsy)
-		link.attr('title', art.data('hint') );		
+		link.attr('title', art.data('hint') );
 
 		if(document.location.hash == hash)
 			link.each(showThisArticle);
@@ -108,10 +108,12 @@ function generateNav()
 // show article, given nav link in 'this' context
 function showThisArticle()
 {
+	var art = $(this).data('article');
+
 	// hide all other articles
 	$('article').hide();
 	// show this one
-	$(this).data('article').show().text();
+	art.show().text();
 
 	// clear active on all other service
 	$('nav .service').removeClass('active');
@@ -120,12 +122,14 @@ function showThisArticle()
 
 	// update hash location (when active, not clicked)
 	// also only give the default article a hash if explicitly active
-	if( !$(this).data('article').hasClass('default') || document.location.hash)
+	if( !art.hasClass('default') || document.location.hash)
 		document.location.hash = $(this).attr('href');
+
+	$('.articles header').html(  art.data('hint') );
 
 	// need to init?
 	//if ( !$(this).data('article').data('ready') )
-		initArticle( $(this).data('article') )
+		initArticle(art);
 }
 
 function preloadArticles(){
@@ -170,6 +174,7 @@ function initArticle(art){
 					art.html(html);
 					// syntax highlighting
 					$('pre code',art).each(function(i, e) {hljs.highlightBlock(e)});
+
 				}
 			});
 	}	
@@ -178,6 +183,7 @@ function initArticle(art){
 		var html = $(art).html();
 		html = converter.makeHtml(html);
 		$(art).html(html);
+
 	}
 
 	// syntax highlighting of inline articles

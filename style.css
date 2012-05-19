@@ -111,7 +111,7 @@ border-top-color:black;
 .articles
 {
 position:absolute;
-top:500px;
+top:530px;
 width:1000px;
 left:50%;
 margin-left:-500px;
@@ -123,6 +123,23 @@ article img
 {
 float:right;
 margin-left:30px;
+}
+
+.articles header{
+position:relative;
+top:-50px;
+width:100%;
+font-family:'Josefin Sans';
+text-align:center;
+font-size:24px;
+}
+
+.articles header:before {
+content: '\201C';
+}
+
+.articles header:after {
+content: '\201D';
 }
 
 article{

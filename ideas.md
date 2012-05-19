@@ -25,3 +25,5 @@ HINT TO ARTICLE HEADERi, or auto header based on feed description etc
 
 auto update relative date every so often
 for blog: regarding game engines and open source
+
+section support for plugin
