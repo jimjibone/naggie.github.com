@@ -1,4 +1,5 @@
 # Ideas, may or may not be implemented.
+
 HTML5 all tags for sematics (article to section?)
 attribute libs
 mobile site
@@ -27,9 +28,13 @@ jfeed/node based RSS proxy with application/rss+jsonp integration or transparent
 use css3 to replace some js animations
 make feed images nice, maybe like polaroids
 MIME types to people types. Eg: x-web/markdown to just markdown. lol.
-
+Projects tab to show vosbox, mldash etc
 
 # Bugs
 
 fix navbar height in XP/chrome
 fix compatability mode in IE 7/8
+
+# Blog articles
+
+Git, your data, and 'the cloud'
