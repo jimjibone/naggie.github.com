@@ -217,12 +217,12 @@ function feed2html(feed){
 
 	for (var i in feed.items){
 		var post = $('<div class="post"><div class="meta"></div><div class="content"></div></div>');
-		$('.meta',post).append('<h2><a href="'+feed.items[i].link+'">'+feed.items[i].title+'</a></h2>');
+		$('.meta',post).append('<h1><a href="'+feed.items[i].link+'">'+feed.items[i].title+'</a></h1>');
 
 		var date = new Date(feed.items[i].updated);
 		date = relativeDate(date);
 
-		$('.meta h2',post).append('<span class="date">'+date+'</span>');
+		$('.meta h1',post).append('<span class="date">'+date+'</span>');
 
 		$('.meta',post).append('<div class="ref">'+feed.items[i].link.replace(/http:\/\//,'').match(/[a-z0-9\.]+/i)+'</div>');
 
