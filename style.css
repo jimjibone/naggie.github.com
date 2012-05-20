@@ -237,7 +237,8 @@ padding:5px;
 box-shadow:2px 2px 2px gray;
 }
 
-.rss a img,.rss img[height="1"]{
+/* don't put above class on RSS hack images (tracking pixels, link text images etc)*/
+.rss a[rel="nofollow"] img,.rss img[height="1"],.rss img[border="0"]{
 border:0;
 margin:0;
 padding:0;
