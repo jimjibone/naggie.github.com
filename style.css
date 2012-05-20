@@ -5,11 +5,11 @@ All rights reserved.
 
 
 @font-face {
-  font-family: 'Josefin Sans';
-  font-style: normal;
-  font-weight: 700;
-  /*src: local('Josefin Sans Bold'), local('JosefinSans-Bold'), url('josefinsans-bold.woff') format('woff');*/
-  src: local('Josefin Sans Bold'), local('JosefinSans-Bold'), url('http://themes.googleusercontent.com/static/fonts/josefinsans/v3/C6HYlRF50SGJq1XyXj04zxAPw1J91axKNXP_-QX9CC8.woff') format('woff');
+font-family: 'Arimo';
+font-style: normal;
+font-weight: normal;
+/*src: local('Arimo'),url('arimo.woff') format('woff');*/
+src: local('Arimo'), url('http://themes.googleusercontent.com/static/fonts/arimo/v3/ZS0wkeOZuckNE3boyLYNt6CWcynf_cDxXwCLxiixG1c.woff') format('woff');
 }
 
 /* force scrollbar */
@@ -59,13 +59,12 @@ nav
 {
 text-transform:uppercase;
 position:absolute;
-font-family: 'Josefin Sans', sans-serif;
+font-family: 'Arimo', sans-serif;
 font-size: 20px;
-padding:10px 0 5px 0;
-margin-top:40px;
+padding:7px 0 5px 0;
 background:#000 repeat-x;
 display:block;
-top:360px;
+top:400px;
 width:100%;
 }
 
@@ -79,7 +78,7 @@ transition:color .25s;
 position:relative;
 text-decoration:none;
 text-transform:uppercase;
-padding:20px 20px 15px 20px;
+padding:17px 20px 15px 20px;
 margin:10px;
 }
 
@@ -129,7 +128,7 @@ margin-left:30px;
 position:relative;
 top:-10px;
 width:100%;
-font-family:'Josefin Sans';
+font-family:'Arimo';
 text-align:center;
 font-size:20px;
 text-transform:uppercase;
@@ -162,7 +161,7 @@ margin:50px;
 
 #logo
 {
-font-family: 'Josefin Sans', sans-serif;
+font-family: 'Arimo', sans-serif;
 color:white;
 text-transform:uppercase;
 padding:130px 0 0 0;
