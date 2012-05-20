@@ -230,11 +230,12 @@ margin-bottom:12px;
 float:none;
 max-width:480px;
 display:block;
+margin:40px auto;
+text-align:center;
 }
 
 img.picture{
 border:1px solid #eee;
 padding:5px;
-margin:10px;
 box-shadow:2px 2px 2px gray;
 }
