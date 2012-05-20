@@ -30,6 +30,8 @@ make feed images nice, maybe like polaroids
 MIME types to people types. Eg: x-web/markdown to just markdown. lol.
 Projects tab to show vosbox, mldash etc
 Name defaults to regex on src
+markdown optional
+Error CSS and button CSS
 
 # Bugs
 
@@ -39,4 +41,3 @@ fix compatability mode in IE 7/8
 # Blog articles
 
 Git, your data, and 'the cloud'
-markdown optional
