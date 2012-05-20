@@ -39,3 +39,4 @@ fix compatability mode in IE 7/8
 # Blog articles
 
 Git, your data, and 'the cloud'
+markdown optional
