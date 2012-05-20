@@ -231,3 +231,10 @@ float:none;
 max-width:480px;
 display:block;
 }
+
+img.picture{
+border:1px solid #eee;
+padding:5px;
+margin:10px;
+box-shadow:2px 2px 2px gray;
+}
