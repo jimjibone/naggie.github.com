@@ -29,6 +29,7 @@ use css3 to replace some js animations
 make feed images nice, maybe like polaroids
 MIME types to people types. Eg: x-web/markdown to just markdown. lol.
 Projects tab to show vosbox, mldash etc
+Name defaults to regex on src
 
 # Bugs
 
