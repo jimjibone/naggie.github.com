@@ -41,3 +41,5 @@ fix compatability mode in IE 7/8
 # Blog articles
 
 Git, your data, and 'the cloud'
+Ubuntu 12.04 quick review
+Writing Effective software
