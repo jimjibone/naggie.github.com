@@ -3,6 +3,7 @@
 HTML5 all tags for sematics (article to section?)
 attribute libs
 mobile site
+markdown parser and code highlight to be loaded dynamically
 xml sitemap
 pack all JS
 litter profile with logos from products, uni, companies, used and created
