@@ -6,6 +6,7 @@ mobile site
 xml sitemap
 pack all JS
 litter profile with logos from products, uni, companies, used and created
+print media support (CV ETC, header, title, no decor)
 to less.css 
 make file for CSS and JS
 with disclaimer
