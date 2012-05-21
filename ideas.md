@@ -6,6 +6,8 @@ mobile site
 xml sitemap
 pack all JS
 litter profile with logos from products, uni, companies, used and created
+to less.css 
+make file for CSS and JS
 with disclaimer
 gravatar avatar
 popovers for article links http://onehackoranother.com/projects/jquery/tipsy/#options
