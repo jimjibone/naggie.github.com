@@ -3,12 +3,15 @@
 HTML5 all tags for sematics (article to section?)
 attribute libs
 mobile site
+xml sitemap
 pack all JS
 litter profile with logos from products, uni, companies, used and created
 with disclaimer
 gravatar avatar
 popovers for article links http://onehackoranother.com/projects/jquery/tipsy/#options
 to be manually fired in specific order on load, moving CB logo 
+left/right paddles
+up/down side paddles for RSS
 to show a 128x128 icon, as a preview
 integrate linkedin
 make adaptive with adapt.js, making top links blocks, removing banner, etc
@@ -32,6 +35,7 @@ Projects tab to show vosbox, mldash etc
 Name defaults to regex on src
 markdown optional
 Error CSS and button CSS
+RSS infinite scroll is fuing clever JSONP proxy
 
 # Bugs
 
