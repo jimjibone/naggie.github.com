@@ -162,8 +162,6 @@ function initArticle(art){
 	if (art.data('ready'))
 		return false;
 
-	console.log('init',art.data('name'));
-
 	// set flag so function is not called again
 	art.data('ready',true);
 	
