@@ -2,6 +2,7 @@
 
 HTML5 all tags for sematics (article to section?)
 attribute libs
+CV: http://www.timwarren.co.uk/cv/Tim_Warren_CV_No_Address_2010_03_31.pdf
 mobile site
 markdown parser and code highlight to be loaded dynamically
 $('article h1').css('color','white').css('background','black').css('padding','2px 5px 2px 5px').css('display','inline-block');
