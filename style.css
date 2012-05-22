@@ -226,13 +226,20 @@ color:gray;
 margin-bottom:12px;
 }
 
-.picture,.rss img{
+.rss img{
 float:none;
 display:block;
 margin:40px auto;
 text-align:center;
-border:1px solid #eee;
-padding:5px;
+border:6px solid white;
+outline:1px solid #eee;
+box-shadow:2px 2px 2px gray;
+}
+
+/* less.css would be nice. */
+.picture{
+border:6px solid white;
+outline:1px solid #eee;
 box-shadow:2px 2px 2px gray;
 }
 
