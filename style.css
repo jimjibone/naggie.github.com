@@ -3,21 +3,12 @@ Copyright Callan Bryant 2011-2012 <callan.bryant@gmail.com> http://callanbryant.
 All rights reserved.
 */
 
-
-@font-face {
-font-family: 'Arimo';
-font-style: normal;
-font-weight: normal;
-/*src: local('Arimo'),url('arimo.woff') format('woff');*/
-src: local('Arimo'), url('http://themes.googleusercontent.com/static/fonts/arimo/v3/ZS0wkeOZuckNE3boyLYNt6CWcynf_cDxXwCLxiixG1c.woff') format('woff');
-}
-
 /* force scrollbar */
 html {height:101%;}
 body
 {
 background:#fff;
-font-family:Arimo, sans-serif;
+font-family: sans-serif;
 text-align:center;
 margin:0;
 }
@@ -63,7 +54,6 @@ nav
 {
 text-transform:uppercase;
 position:absolute;
-font-family: 'Arimo', sans-serif;
 font-size: 20px;
 padding:7px 0 5px 0;
 background:#000 repeat-x;
@@ -132,7 +122,6 @@ margin-left:30px;
 position:relative;
 top:-10px;
 width:100%;
-font-family:'Arimo';
 text-align:center;
 font-size:20px;
 text-transform:uppercase;
@@ -165,7 +154,6 @@ margin:50px;
 
 #logo
 {
-font-family: 'Arimo', sans-serif;
 color:white;
 text-transform:uppercase;
 padding:80px 0 0 0;
