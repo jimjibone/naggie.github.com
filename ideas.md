@@ -4,14 +4,15 @@ HTML5 all tags for sematics (article to section?)
 attribute libs
 mobile site
 markdown parser and code highlight to be loaded dynamically
+$('article h1').css('color','white').css('background','black').css('padding','2px 5px 2px 5px').css('display','inline-block');
 xml sitemap
 pack all JS
 litter profile with logos from products, uni, companies, used and created
 print media support (CV ETC, header, title, no decor)
+if hostname does not equal cb, whone home
 to less.css 
 make file for CSS and JS
 with disclaimer
-gravatar avatar
 popovers for article links http://onehackoranother.com/projects/jquery/tipsy/#options
 to be manually fired in specific order on load, moving CB logo 
 left/right paddles
