@@ -235,18 +235,18 @@ float:none;
 display:block;
 margin:40px auto;
 text-align:center;
-border:6px solid white;
-outline:1px solid #eee;
+padding:6px;
+border:1px solid #eee;
 box-shadow:2px 2px 2px gray;
-background:#eee;
+background:#fefefe;
 }
 
 /* less.css would be nice. */
 .picture{
-border:6px solid white;
-outline:1px solid #eee;
+padding:6px;
+border:1px solid #eee;
 box-shadow:2px 2px 2px gray;
-background:#eee;
+background:#fefefe;
 }
 
 /* don't put above class on RSS hack images (tracking pixels, link text images etc)*/
