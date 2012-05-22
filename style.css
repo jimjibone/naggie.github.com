@@ -37,6 +37,10 @@ div#contact a{
 color:white;
 }
 
+.right{
+text-align:right;
+}
+
 div#backdrop
 {
 overflow:hidden;
@@ -234,6 +238,7 @@ text-align:center;
 border:6px solid white;
 outline:1px solid #eee;
 box-shadow:2px 2px 2px gray;
+background:#eee;
 }
 
 /* less.css would be nice. */
@@ -241,6 +246,7 @@ box-shadow:2px 2px 2px gray;
 border:6px solid white;
 outline:1px solid #eee;
 box-shadow:2px 2px 2px gray;
+background:#eee;
 }
 
 /* don't put above class on RSS hack images (tracking pixels, link text images etc)*/
