@@ -47,7 +47,6 @@ RSS infinite scroll is fuing clever JSONP proxy
 
 fix compatability mode in IE 7/8 (top half os site is offset)
 Fix internal links to articles (eg href=#projects")
-fix nav bar in IE: only CV shows unless dev tools are running :S
 fix side borders on articles in IE (one small stick at to for non 960-gs arts)
 
 # Blog articles
