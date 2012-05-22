@@ -16,10 +16,6 @@ $(function(){
 		preloadArticles();
 	});
 
-	$('.fadeload:visible').css('opacity',0).load(function(){
-		$(this).fadeTo(200,1);
-	});
-
 	$('#contact').hide();
 
 	var hideQuote = function(){

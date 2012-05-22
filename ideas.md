@@ -44,6 +44,8 @@ RSS infinite scroll is fuing clever JSONP proxy
 
 # Bugs
 
+fadeload on init for html/md aricles
+fadeload only for images that have not loaded
 fix compatability mode in IE 7/8
 Fix internal links to articles (eg href=#projects"
 
