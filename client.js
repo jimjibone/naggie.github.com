@@ -16,12 +16,8 @@ $(function(){
 		preloadArticles();
 	});
 
-	// fadeload only if current item is visible
-	$('.fadeload').each(function(){
-		if ($(this).is(':visible'))
-			$(this).css('opacity',0).load(function(){
-				$(this).fadeTo(200,1);
-			});
+	$('.fadeload:visible').css('opacity',0).load(function(){
+		$(this).fadeTo(200,1);
 	});
 
 	$('#contact').hide();
