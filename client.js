@@ -20,7 +20,7 @@ $(function(){
 
 	var hideQuote = function(){
 		$('#logo .quote').stop().fadeOut();
-		$('#logo h1').stop().animate({'margin-top':'50px'})
+		$('#logo h1').stop().animate({'margin-top':'50px'});
 	};
 
 	setTimeout(hideQuote,4000);
@@ -28,7 +28,7 @@ $(function(){
 
 	$('#logo').bind('mouseenter',function(){
 		$('#logo .quote').stop().fadeIn();
-		$('#logo h1').stop().animate({'margin-top':'26px'})
+		$('#logo h1').stop().animate({'margin-top':'26px'});
 	});
 
 	

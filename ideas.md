@@ -2,14 +2,14 @@
 
 HTML5 all tags for sematics (article to section?)
 attribute libs
-CV: http://www.timwarren.co.uk/cv/Tim_Warren_CV_No_Address_2010_03_31.pdf
+Asimilate CV: http://www.timwarren.co.uk/cv/Tim_Warren_CV_No_Address_2010_03_31.pdf
 mobile site
 markdown parser and code highlight to be loaded dynamically
 $('article h1').css('color','white').css('background','black').css('padding','2px 5px 2px 5px').css('display','inline-block');
 xml sitemap
 pack all JS
 litter profile with logos from products, uni, companies, used and created
-print media support (CV ETC, header, title, no decor)
+print media support (CV ETC, header, title, no decor) then use to make CV
 if hostname does not equal cb, whone home
 to less.css 
 make file for CSS and JS
@@ -45,10 +45,10 @@ RSS infinite scroll is fuing clever JSONP proxy
 
 # Bugs
 
-fadeload on init for html/md aricles
-fadeload only for images that have not loaded
-fix compatability mode in IE 7/8
-Fix internal links to articles (eg href=#projects"
+fix compatability mode in IE 7/8 (top half os site is offset)
+Fix internal links to articles (eg href=#projects")
+fix nav bar in IE: only CV shows unless dev tools are running :S
+fix side borders on articles in IE (one small stick at to for non 960-gs arts)
 
 # Blog articles
 
