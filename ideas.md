@@ -44,8 +44,8 @@ RSS infinite scroll is fuing clever JSONP proxy
 
 # Bugs
 
-fix navbar height in XP/chrome
 fix compatability mode in IE 7/8
+Fix internal links to articles (eg href=#projects"
 
 # Blog articles
 
