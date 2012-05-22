@@ -1,9 +1,7 @@
 // Copyright Callan Bryant 2011-2012 <callan.bryant@gmail.com> http://callanbryant.co.uk
 // All rights reserved.
 
-// TODO: allow targeting only some articles.
-
-var converter = new Showdown.converter();
+//var converter = new Showdown.converter();
 $(function(){
 	// apply loading gif to each external external article prior to load.
 	$('article[data-src]').html('<div class="throbber"></div>');
@@ -187,7 +185,8 @@ function initArticle(art){
 				dataType: 'html',
 				success: function(html){
 					if (art.data('type') == 'text/x-web-markdown')
-						html = converter.makeHtml(html);
+						//html = converter.makeHtml(html);
+						html = 'Markdown disabled.';
 			
 					art.html(html);
 					// syntax highlighting

@@ -4,7 +4,7 @@ HTML5 all tags for sematics (article to section?)
 attribute libs
 Asimilate CV: http://www.timwarren.co.uk/cv/Tim_Warren_CV_No_Address_2010_03_31.pdf
 mobile site
-markdown parser and code highlight to be loaded dynamically
+markdown parser and code highlight to be loaded dynamically or leave md disabled
 $('article h1').css('color','white').css('background','black').css('padding','2px 5px 2px 5px').css('display','inline-block');
 xml sitemap
 pack all JS
@@ -39,9 +39,7 @@ make feed images nice, maybe like polaroids
 MIME types to people types. Eg: x-web/markdown to just markdown. lol.
 Projects tab to show vosbox, mldash etc
 Name defaults to regex on src
-markdown optional
-Error CSS and button CSS
-RSS infinite scroll is fuing clever JSONP proxy
+Error CSS and button CSS and better h1, h2 css etc
 
 # Bugs
 
@@ -55,3 +53,4 @@ low priority: fix nav links around IE with ants. $his).blur
 Git, your data, and 'the cloud'
 Ubuntu 12.04 quick review
 Writing Effective software
+APC thing/
