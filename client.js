@@ -216,7 +216,7 @@ function feed2html(feed){
 	var html = $('<div class="rss"></div>');
 
 	for (var i in feed.items){
-		var post = $('<div class="post"><div class="meta"></div><div class="content"></div></div>');
+		var post = $('<div class="container_12 post"><div class="grid_10 prefix_1 suffix_1 meta"></div><div class="content grid_10 prefix_1 suffix_1"></div></div>');
 		$('.meta',post).append('<h1><a href="'+feed.items[i].link+'">'+feed.items[i].title+'</a></h1>');
 
 		var date = new Date(feed.items[i].updated);

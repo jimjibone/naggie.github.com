@@ -7,7 +7,6 @@ mobile site
 markdown parser and code highlight to be loaded dynamically or leave md disabled
 $('article h1').css('color','white').css('background','black').css('padding','2px 5px 2px 5px').css('display','inline-block');
 xml sitemap
-make rss feeds thinner text body for easier reading
 pack all JS
 litter profile with logos from products, uni, companies, used and created
 print media support (CV ETC, header, title, no decor) then use to make CV
