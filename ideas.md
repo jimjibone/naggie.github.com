@@ -47,6 +47,7 @@ fix compatability mode in IE 7/8 (top half os site is offset)
 Fix internal links to articles (eg href=#projects")
 fix side borders on articles in IE (one small stick at to for non 960-gs arts)
 low priority: fix nav links around IE with ants. $his).blur
+rel time is undefined on IE
 
 # Blog articles
 
