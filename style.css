@@ -118,6 +118,17 @@ float:right;
 margin-left:30px;
 }
 
+
+article .logos{
+padding-top:15px;
+text-align:center;
+}
+
+article .logos img{
+opacity:0.7;
+margin-bottom:5px;
+}
+
 article p{
 color:#333;
 }

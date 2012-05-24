@@ -14,6 +14,10 @@ $(function(){
 		preloadArticles();
 	});
 
+	$('article .logos img').css('opacity',0).load(function(){
+		$(this).fadeTo('fast',0.7);
+	});
+
 	$('#contact').hide();
 
 	var hideQuote = function(){
