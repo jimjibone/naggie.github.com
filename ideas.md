@@ -9,8 +9,9 @@ $('article h1').css('color','white').css('background','black').css('padding','2p
 xml sitemap
 pack all JS
 litter profile with logos from products, uni, companies, used and created
+closure compiler for js:https://github.com/jareiko/TriggerRallyOE/blob/master/compile-closure.sh
 print media support (CV ETC, header, title, no decor) then use to make CV
-if hostname does not equal cb, whone home
+if hostname does not equal cb, phone home
 to less.css 
 make file for CSS and JS
 with disclaimer
