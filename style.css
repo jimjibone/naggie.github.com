@@ -241,7 +241,7 @@ text-align:center;
 padding:6px;
 border:1px solid #eee;
 box-shadow:2px 2px 2px gray;
-background:#fefefe;
+background:#f8f8ff;
 }
 
 /* less.css would be nice. */
@@ -249,7 +249,7 @@ background:#fefefe;
 padding:6px;
 border:1px solid #eee;
 box-shadow:2px 2px 2px gray;
-background:#fefefe;
+background:#f8f8ff;
 }
 
 /* don't put above class on RSS hack images (tracking pixels, link text images etc)*/
