@@ -52,6 +52,7 @@ width:1920px;
 
 nav
 {
+min-height:22px;
 text-transform:uppercase;
 position:absolute;
 font-size: 20px;
