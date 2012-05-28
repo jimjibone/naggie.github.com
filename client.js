@@ -25,8 +25,10 @@ $(function(){
 		$('#logo h1').stop().animate({'margin-top':'50px'});
 	};
 
-	setTimeout(hideQuote,4000);
-	$('#logo').bind('mouseleave',hideQuote);
+	setTimeout(function(){
+		hideQuote();
+		$('#logo').bind('mouseleave',hideQuote);
+	},4000);
 
 	$('#logo').bind('mouseenter',function(){
 		$('#logo .quote').stop().fadeIn();

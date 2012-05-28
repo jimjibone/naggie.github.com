@@ -1,5 +1,7 @@
 # Ideas, may or may not be implemented.
 
+h1 nav, scrollspy? hover?
+ribbon for h1? wrapping round article?
 HTML5 all tags for sematics (article to section?)
 attribute libs
 Asimilate CV: http://www.timwarren.co.uk/cv/Tim_Warren_CV_No_Address_2010_03_31.pdf
