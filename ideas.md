@@ -13,6 +13,7 @@ pack all JS
 litter profile with logos from products, uni, companies, used and created
 closure compiler for js:https://github.com/jareiko/TriggerRallyOE/blob/master/compile-closure.sh
 print media support (CV ETC, header, title, no decor) then use to make CV
+data-url as before, but also link in documen
 if hostname does not equal cb, phone home
 to less.css 
 make file for CSS and JS
@@ -58,3 +59,6 @@ Git, your data, and 'the cloud'
 Ubuntu 12.04 quick review
 Writing Effective software
 APC thing/
+http://upload.wikimedia.org/wikipedia/commons/9/9d/Circle-trig6.svg
+chrome minus google
+Why extension-tyle 'apps'actually do make sense
