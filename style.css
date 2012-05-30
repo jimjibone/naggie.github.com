@@ -264,3 +264,9 @@ margin:0;
 padding:0;
 box-shadow:none;
 }
+
+/* Stop IE from drawing silly dots around links */
+a:active,a:focus {
+outline:none;
+ie-dummy:expression(this.hideFocus=true);
+}
