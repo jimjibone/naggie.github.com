@@ -110,7 +110,7 @@ function generateNav()
 		});
 
 		// stop old IE from drawing dotted lines around the buttons
-		//link.click(function(){$(this).blur()});
+		link.click(function(){$(this).blur()});
 
 		// attach reference to element so it can be shown later
 		link.data('article',art);

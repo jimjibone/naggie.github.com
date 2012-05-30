@@ -62,3 +62,4 @@ APC thing/
 http://upload.wikimedia.org/wikipedia/commons/9/9d/Circle-trig6.svg
 chrome minus google
 Why extension-tyle 'apps'actually do make sense
+git deployment and backup in a nutshell
