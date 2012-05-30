@@ -245,6 +245,10 @@ box-shadow:2px 2px 2px gray;
 background:#f8f8ff;
 }
 
+a img{
+border:none;
+}
+
 /* less.css would be nice. */
 .picture{
 padding:6px;
