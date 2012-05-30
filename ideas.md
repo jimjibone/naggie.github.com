@@ -47,11 +47,12 @@ Error CSS and button CSS and better h1, h2 css etc
 
 # Bugs
 
-fix compatability mode in IE 7/8 (top half os site is offset) (should be fixed, test on CFS etc)
+fix compatability mode in IE 7 and 6 or 8 in compat mode  (top half os site is offset)
 Fix internal links to articles (eg href=#projects")
 fix side borders on articles in IE (one small stick at to for non 960-gs arts)
 rel time is undefined on IE
 fix opacity of contact bar
+side bars are not thick in IE
 
 # Blog articles
 
