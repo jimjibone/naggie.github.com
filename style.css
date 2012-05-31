@@ -19,6 +19,7 @@ top:0;
 width:100%;
 background:black; /*fallback for IE*/
 background:rgba(0,0,0,0.7);
+filter: alpha(opacity=70);
 color:white;
 padding:5px;
 z-index:1000;

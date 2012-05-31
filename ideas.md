@@ -52,7 +52,6 @@ Fix internal links to articles (eg href=#projects")
 fix side borders on articles in IE (one small stick at to for non 960-gs arts)
 rel time is undefined on IE
 fix opacity of contact bar
-side bars are not thick in IE
 
 # Blog articles
 
