@@ -145,7 +145,7 @@ color:gray;
 }
 
 article{
-display:none;
+/*display:none; breaks IE8 borders...*/
 padding:20px;
 text-align:left;
 border-left:2px solid black;
