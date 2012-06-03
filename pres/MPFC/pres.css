@@ -8,6 +8,19 @@ font-family: sans-serif;
 font-size: 48px;
 }
 
+.impress-enabled .step{
+-webkit-transition: opacity 0.5s;
+-moz-transition:    opacity 0.5s;
+-ms-transition:     opacity 0.5s;
+-o-transition:      opacity 0.5s;
+transition:         opacity 0.5s;
+opacity:0.6;
+}
+
+.impress-enabled .step.active{
+opacity:1;
+}
+
 .slide {
 text-align:left;
 border-left:5px solid black;
