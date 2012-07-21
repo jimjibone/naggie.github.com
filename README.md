@@ -1,6 +1,2 @@
-This is my personal website.
-
-It serves as a place to mess around with javascript and CSS,
-and to promote myself.
-
-The article system used is beind developed into a jquery plugin soon.
+This is my personal website, with a nice article engine that is able to load
+RSS, HTML or Markdown
