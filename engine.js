@@ -171,7 +171,7 @@ function initArticle(art){
 	
 	// external HTML fragment, markdown
 	if ( art.data('src') ){
-		if (art.data('type') == 'application/rss+xml' ||  art.data('type') == 'application/atom+xml')
+		if (art.data('type') == 'rss' ||  art.data('type') == 'atom')
 			$.getFeed({
 				url: art.data('src'),
 				error:function(){
@@ -186,13 +186,13 @@ function initArticle(art){
 			$.ajax({
 				url: art.data('src'),
 				error:function(){
-					art.text('Error retrieving article.');
+					art.text('Error retrieving article');
 				},
 				dataType: 'html',
 				success: function(html){
-					if (art.data('type') == 'text/x-web-markdown')
+					if (art.data('type') == 'markdown')
 						//html = converter.makeHtml(html);
-						html = 'Markdown disabled.';
+						html = 'Markdown disabled';
 			
 					art.html(html);
 					// syntax highlighting
