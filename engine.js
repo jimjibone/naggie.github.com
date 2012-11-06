@@ -202,7 +202,7 @@ function initArticle(art){
 			})
 	}	
 	// inline markdown
-	else if(art.data('type') == 'text/x-web-markdown'){
+	else if(art.data('type') == 'markdown'){
 		var html = $(art).html()
 		html = converter.makeHtml(html)
 		$(art).html(html)
