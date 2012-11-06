@@ -223,8 +223,7 @@ function feed2html(feed){
 		$('.meta',post).append('<h1><a href="'+feed.items[i].link+'">'+feed.items[i].title+'</a></h1>')
 
 		var date = feed.items[i].updated
-		v
-		./feedr h1 = $('.meta h1',post)
+		var h1 = $('.meta h1',post)
 
 		$('<time />').attr('datetime', date)
 			.text( relativeDate( new Date(date) ) )
