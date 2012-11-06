@@ -216,11 +216,11 @@ pre code{
 font-size:14px;
 }
 
-.rss .h2{
+.rss .h2 {
 display:inline;
 }
 
-.rss .date{
+.rss time {
 color:gray;
 font-style:italic;
 font-weight:normal;

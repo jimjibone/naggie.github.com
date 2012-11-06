@@ -222,10 +222,13 @@ function feed2html(feed){
 		var post = $('<div class="container_12 post"><div class="grid_10 prefix_1 suffix_1 meta"></div><div class="content grid_10 prefix_1 suffix_1"></div></div>')
 		$('.meta',post).append('<h1><a href="'+feed.items[i].link+'">'+feed.items[i].title+'</a></h1>')
 
-		var date = new Date(feed.items[i].updated)
-		date = relativeDate(date)
+		var date = feed.items[i].updated
+		v
+		./feedr h1 = $('.meta h1',post)
 
-		$('.meta h1',post).append('<span class="date">'+date+'</span>')
+		$('<time />').attr('datetime', date)
+			.text( relativeDate( new Date(date) ) )
+			.appendTo(h1)
 
 		$('.meta',post).append('<div class="ref">'+feed.items[i].link.replace(/http:\/\//,'').match(/[a-z0-9\.]+/i)+'</div>')
 
@@ -237,6 +240,14 @@ function feed2html(feed){
 
 	return html
 }
+
+// every minute, update relative dates
+setInterval( function() {
+	$('time[datetime]').each(function(){
+		var absdate = new Date( $(this).attr('datetime') )
+		$(this).text( relativeDate(absdate) )
+	})
+} ,30000)
 
 // Copyright Callan Bryant 2011-2012 <callan.bryant@gmail.com> http://callanbryant.co.uk
 // All rights reserved.
