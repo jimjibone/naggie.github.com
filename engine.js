@@ -7,53 +7,7 @@ $(function(){
 	$('article[data-src]').html('<div class="throbber"></div>')
 
 	generateNav()
-
-	$('#backdrop > img').hide().bind("load",function(){
-		$(this).fadeIn(3500)
-		// now is a good time to preload any articles
-		preloadArticles()
-	})
-
-	$('article .logos img').css('opacity',0).load(function(){
-		$(this).fadeTo('fast',0.7)
-	})
-
-	$('#contact').hide()
-
-	var hideQuote = function(){
-		$('#logo .quote').stop().fadeOut()
-		$('#logo h1').stop().animate({'margin-top':'50px'})
-	}
-
-	setTimeout(function(){
-		hideQuote()
-		$('#logo').bind('mouseleave',hideQuote)
-	},4000)
-
-	$('#logo').bind('mouseenter',function(){
-		$('#logo .quote').stop().fadeIn()
-		$('#logo h1').stop().animate({'margin-top':'26px'})
-	})
-
-	
-
-	var contactTimeout = setTimeout(function(){
-		$('#contact').hide().fadeIn()
-	},6000)
-
-	$(window).one('scroll',function(){
-		clearTimeout(contactTimeout)
-		$('#contact').fadeIn()
-	})
-
-
-	// IE9 hack
-	// the load event does not always fire due to caching, 
-	// so trigger it manually...
-	if($.browser.msie && parseInt($.browser.version) >= 9 )
-		setTimeout(function(){
-			$('img').trigger('load')
-		},3000)
+	animations()
 
 	// left/right select service
 	$(document).bind('keydown',"right",function(){
@@ -308,4 +262,55 @@ var relativeDate = (function(undefined){
 
 if(typeof module != 'undefined' && module.exports){
   module.exports = relativeDate
+}
+
+function animations() {
+	$('#backdrop > img').hide().bind("load",function(){
+		$(this).fadeIn(3500)
+		// now is a good time to preload any articles
+		preloadArticles()
+	})
+
+	$('article .logos img').css('opacity',0).load(function(){
+		$(this).fadeTo('fast',0.7)
+	})
+
+	$('#contact').hide()
+
+	var hideQuote = function(){
+		$('#logo .quote').stop().fadeOut()
+		$('#logo h1').stop().animate({'margin-top':'50px'})
+	}
+
+	setTimeout(function(){
+		hideQuote()
+		$('#logo').bind('mouseleave',hideQuote)
+	},4000)
+
+	$('#logo').bind('mouseenter',function(){
+		$('#logo .quote').stop().fadeIn()
+		$('#logo h1').stop().animate({'margin-top':'26px'})
+	})
+
+	
+
+	var contactTimeout = setTimeout(function(){
+		$('#contact').hide().fadeIn()
+	},6000)
+
+	$(window).one('scroll',function(){
+		clearTimeout(contactTimeout)
+		$('#contact').fadeIn()
+	})
+
+
+	// IE9 hack
+	// the load event does not always fire due to caching, 
+	// so trigger it manually...
+	if($.browser.msie && parseInt($.browser.version) >= 9 )
+		setTimeout(function(){
+			$('img').trigger('load')
+		},3000)
+
+
 }
