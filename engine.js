@@ -85,6 +85,14 @@ $(function(){
 	}).bind('keydown','return',function(){
 		$('.active').css('position','relative').css('top','2px')
 	})
+
+	// infinite scrolling example
+	// calls many times. Article should set and test loading attribute
+	$(window).scroll(function(){
+		// test if last article is in view
+		//if ($(window).scrollTop() > $('.post').last().offset().top - $(window).height() )
+		//	console.log('Loading...')
+	})
 	
 })
 
@@ -301,4 +309,3 @@ var relativeDate = (function(undefined){
 if(typeof module != 'undefined' && module.exports){
   module.exports = relativeDate
 }
-
