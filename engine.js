@@ -102,12 +102,32 @@ function initArticle(art){
 
 	if (art.data('type') !== 'manifest')
 		render({
-			name : undefined,
-			type : art.data('type'),
-			src  : art.data('src')
+			title : undefined,
+			type  : art.data('type'),
+			src   : art.data('src')
 		},art)
 	else
-		art.html('manifest. AHHH!!!')
+		$.ajax({
+			url: art.data('src'),
+			success : function(manifest) {
+				dir = art.data('src').replace(/[^\/]*$/,'')
+				art.manifest = manifest,
+				manifest.forEach(function(i){
+					// paths relative to manifest
+					i.src = dir + i.src
+
+					// other defaults
+					// default to filename if title is not given
+					if (!i.title) i.title = i.src.match(/([^\/]+)\.[^.]+$/)
+
+					render(i,art)
+				})
+			},
+			error : function () {
+				art.text('Error loading manifest')
+			},
+			dataType : 'json'
+		})
 }
 
 // render a section onto an article
@@ -161,6 +181,8 @@ function render(params,article) {
 
 	// syntax highlighting of inline articles
 	$('pre code',section).each(function(i, e) {hljs.highlightBlock(e)})
+
+	return section
 
 }
 

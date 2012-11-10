@@ -12,7 +12,7 @@ Add `<article />` tags to create a new page linked on the nav bar. Set the follo
 
   * `data-name` : The article title (appears on nav bar)
   * `data-hint` : short description (appears above article and button mouseover)
-  * `data-type` : markdown/html/rss/atom/manifest (defaults to HTML)
+  * `data-type` : markdown/html/rss/atom/manifest (from file extension by default)
   * `data-src`  : URL to source file. Same origin policy applies.
 
 # Manifest
@@ -26,6 +26,6 @@ Manifest parset expects a JSON (newest first) array of objects with the followin
   * `title`  : Optional, defaults to filename from Source
   * `hash`   : a hash for caching. Defaults to date. Optional.
   * `author` : Optional name
-  * `type`   : Optional, defaults to markdown.
+  * `type`   : Optional (from file extension by default)
 
   A manifest generator that uses git history is in development.
