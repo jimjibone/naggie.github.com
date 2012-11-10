@@ -9,21 +9,7 @@ $(function(){
 
 	// infinite scrolling example
 	// calls many times. Article should set and test loading attribute
-	$(window).scroll(function(){
-		// test if last article has loaded or not
-		if ($('section').last().data('loading') ) return
-
-		// test if last article is in view
-		if ($(window).scrollTop() > $('section').last().offset().top - $(window).height() ) {
-			var art  = $('nav a.active').data('article')
-			var meta = art.manifest.shift()
-
-			// no moar articles?
-			if (!meta) return
-
-			render(meta,art)
-		}
-	})
+	$(window).scroll(extendArticle)
 })
 
 // create elements representing pages
@@ -138,6 +124,23 @@ function initArticle(art){
 		})
 }
 
+// conditionally extend the article (add more posts)
+function extendArticle() {
+	// test if last post has finished or not
+	if ($('section').last().data('loading') ) return
+
+	// test if last article is in view
+	if ($(window).scrollTop() > $('section').last().offset().top - $(window).height() ) {
+		var art  = $('nav a.active').data('article')
+		var meta = art.manifest.shift()
+
+		// no moar articles?
+		if (!meta) return
+
+		render(meta,art)
+	}
+}
+
 // render a section onto an article
 // replacing a loading gif with the article
 function render(meta,article) {
@@ -176,7 +179,7 @@ function render(meta,article) {
 					section.text('Error retrieving article')
 				},
 				dataType: 'html',
-				success: function(html){
+				success: function(html) {
 					if (meta.type == 'markdown')
 						html = converter.makeHtml(html)
 
