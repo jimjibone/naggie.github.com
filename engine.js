@@ -1,7 +1,7 @@
 // Copyright Callan Bryant 2011-2012 <callan.bryant@gmail.com> http://callanbryant.co.uk
 // All rights reserved.
 
-//var converter = new Showdown.converter()
+var converter = new Showdown.converter()
 $(function(){
 	// apply loading gif to each external external article prior to load.
 	$('article[data-src]').html('<div class="throbber"></div>')
@@ -13,15 +13,17 @@ $(function(){
 	// infinite scrolling example
 	// calls many times. Article should set and test loading attribute
 	$(window).scroll(function(){
+		// test if last article has loaded or not
+		//if ($('.post').last().data('loading') ) return
+
 		// test if last article is in view
 		//if ($(window).scrollTop() > $('.post').last().offset().top - $(window).height() )
 		//	console.log('Loading...')
 	})
-	
 })
 
 // create elements representing pages
-// with attached  events
+// with attached events
 function generateNav()
 {
 	$('nav').empty()
@@ -71,7 +73,7 @@ function showThisArticle()
 
 	// clear active on all other service
 	$('nav .service').removeClass('active')
-	// select this link 
+	// select this link
 	$(this).addClass('active')
 
 	// update hash location (when active, not clicked)
@@ -100,7 +102,7 @@ function initArticle(art){
 
 	// set flag so function is not called again
 	art.data('ready',true)
-	
+
 	// external HTML fragment, markdown
 	if ( art.data('src') ){
 		if (art.data('type') == 'rss' ||  art.data('type') == 'atom')
@@ -125,14 +127,14 @@ function initArticle(art){
 					if (art.data('type') == 'markdown')
 						//html = converter.makeHtml(html)
 						html = 'Markdown disabled'
-			
+
 					art.html(html)
 					// syntax highlighting
 					$('pre code',art).each(function(i, e) {hljs.highlightBlock(e)})
 
 				}
 			})
-	}	
+	}
 	// inline markdown
 	else if (art.data('type') == 'markdown'){
 		var html = $(art).html()
@@ -146,7 +148,7 @@ function initArticle(art){
 }
 
 
-// given a string rss it must return some html... 
+// given a string rss it must return some html...
 function feed2html(feed){
 	var html = $('<div class="rss"></div>')
 
@@ -164,7 +166,7 @@ function feed2html(feed){
 		$('.meta',post).append('<div class="ref">'+feed.items[i].link.replace(/http:\/\//,'').match(/[a-z0-9\.]+/i)+'</div>')
 
 		$('.content',post).append(feed.items[i].description)
-	
+
 
 		html.append(post).append('<hr />')
 	}
@@ -214,7 +216,7 @@ var relativeDate = (function(undefined){
     !reference && ( reference = (new Date).getTime() );
     reference instanceof Date && ( reference = reference.getTime() );
     input instanceof Date && ( input = input.getTime() );
-    
+
     var delta = reference - input,
         format, i, len;
 
@@ -262,7 +264,7 @@ function animations() {
 		$('#logo h1').stop().animate({'margin-top':'26px'})
 	})
 
-	
+
 
 	var contactTimeout = setTimeout(function(){
 		$('#contact').hide().fadeIn()
@@ -275,7 +277,7 @@ function animations() {
 
 
 	// IE9 hack
-	// the load event does not always fire due to caching, 
+	// the load event does not always fire due to caching,
 	// so trigger it manually...
 	if($.browser.msie && parseInt($.browser.version) >= 9 )
 		setTimeout(function(){
