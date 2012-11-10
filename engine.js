@@ -3,9 +3,6 @@
 
 var converter = new Showdown.converter()
 $(function(){
-	// apply loading gif to each external external article prior to load.
-	$('article[data-src]').html('<div class="throbber"></div>')
-
 	generateNav()
 	animations()
 	hotkeys()
@@ -103,48 +100,68 @@ function initArticle(art){
 	// set flag so function is not called again
 	art.data('ready',true)
 
+	if (art.data('type') !== 'manifest')
+		render({
+			name : undefined,
+			type : art.data('type'),
+			src  : art.data('src')
+		},art)
+	else
+		art.html('manifest. AHHH!!!')
+}
+
+// render a section onto an article
+// replacing a loading gif with the article
+function render(params,article) {
+	// defaults
+	if (!params.type && params.src) {
+		if (params.src.match('\.md$') )
+			params.type = 'markdown'
+		else if (params.src.match('\.html$') )
+			params.type = 'html'
+	}
+
+	// section onto article
+	var section = $('<section />').appendTo(article)
+	// apply loading gif to each external external article prior to load.
+	section.html('<div class="throbber"></div>')
+
+
 	// external HTML fragment, markdown
-	if ( art.data('src') ){
-		if (art.data('type') == 'rss' ||  art.data('type') == 'atom')
+	if ( params.src ){
+		if (params.type.match('rss|atom') )
 			$.getFeed({
-				url: art.data('src'),
+				url: params.src,
 				error:function(){
-					art.text('Error retreiving feed')
+					section.text('Error retreiving feed')
 				},
 				success:function(feed){
 					var html = feed2html(feed)
-					art.html(html)
+					section.html(html)
 				}
 			})
 		else
 			$.ajax({
-				url: art.data('src'),
+				url: params.src,
 				error:function(){
-					art.text('Error retrieving article')
+					section.text('Error retrieving article')
 				},
 				dataType: 'html',
 				success: function(html){
-					if (art.data('type') == 'markdown')
-						//html = converter.makeHtml(html)
-						html = 'Markdown disabled'
+					if (params.type == 'markdown')
+						html = converter.makeHtml(html)
 
-					art.html(html)
+					section.html(html)
 					// syntax highlighting
-					$('pre code',art).each(function(i, e) {hljs.highlightBlock(e)})
+					$('pre code',section).each(function(i, e) {hljs.highlightBlock(e)})
 
 				}
 			})
 	}
-	// inline markdown
-	else if (art.data('type') == 'markdown'){
-		var html = $(art).html()
-		html = converter.makeHtml(html)
-		$(art).html(html)
-
-	}
 
 	// syntax highlighting of inline articles
-	$('pre code',art).each(function(i, e) {hljs.highlightBlock(e)})
+	$('pre code',section).each(function(i, e) {hljs.highlightBlock(e)})
+
 }
 
 
