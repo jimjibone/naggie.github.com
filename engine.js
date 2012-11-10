@@ -8,37 +8,7 @@ $(function(){
 
 	generateNav()
 	animations()
-
-	// left/right select service
-	$(document).bind('keydown',"right",function(){
-		// check to see if a service has been active
-		if (!$('.service').hasClass('active'))
-			var next = $('.service').first()
-		else
-			var next = $('.active').next()
-
-		next.each(showThisArticle)
-	})
-	$(document).bind('keydown',"left",function(){
-	// check to see if a service has been active
-		if (!$('.service').hasClass('active'))
-			var next = $('.service').first()
-		else
-			var next = $('.active').prev()
-
-		next.each(showThisArticle)
-	})
-
-	// enter to go to the URL of the active service
-	$(document).bind('keyup','return',function(){
-		$('nav a.active').each(function(){
-			// restore postion
-			$('.active').css('top',0)
-			// do something else using active nav link or attachedarticle
-		})
-	}).bind('keydown','return',function(){
-		$('.active').css('position','relative').css('top','2px')
-	})
+	hotkeys()
 
 	// infinite scrolling example
 	// calls many times. Article should set and test loading attribute
@@ -313,4 +283,38 @@ function animations() {
 		},3000)
 
 
+}
+
+// map hotkeys
+function hotkeys(){
+	// left/right select service
+	$(document).bind('keydown',"right",function(){
+		// check to see if a service has been active
+		if (!$('.service').hasClass('active'))
+			var next = $('.service').first()
+		else
+			var next = $('.active').next()
+
+		next.each(showThisArticle)
+	})
+	$(document).bind('keydown',"left",function(){
+	// check to see if a service has been active
+		if (!$('.service').hasClass('active'))
+			var next = $('.service').first()
+		else
+			var next = $('.active').prev()
+
+		next.each(showThisArticle)
+	})
+
+	// enter to go to the URL of the active service
+	$(document).bind('keyup','return',function(){
+		$('nav a.active').each(function(){
+			// restore postion
+			$('.active').css('top',0)
+			// do something else using active nav link or attachedarticle
+		})
+	}).bind('keydown','return',function(){
+		$('.active').css('position','relative').css('top','2px')
+	})
 }
