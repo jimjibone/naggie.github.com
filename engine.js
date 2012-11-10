@@ -120,8 +120,8 @@ function initArticle(art){
 					// default to filename if title is not given
 					if (!i.title) i.title = i.src.match(/([^\/]+)\.[^.]+$/)
 
-					render(i,art)
 				})
+				render(manifest[0],art)
 			},
 			error : function () {
 				art.text('Error loading manifest')
@@ -132,14 +132,14 @@ function initArticle(art){
 
 // render a section onto an article
 // replacing a loading gif with the article
-function render(params,article) {
+function render(meta,article) {
 	// defaults
-	if (!params.type && params.src) {
-		if (params.src.match('\.md$') )
-			params.type = 'markdown'
-		else if (params.src.match('\.html$') )
-			params.type = 'html'
-	}
+	if (!meta.type && meta.src)
+		if (meta.src.match('\.md$') )
+			meta.type = 'markdown'
+		else if (meta.src.match('\.html$') )
+			meta.type = 'html'
+
 
 	// section onto article
 	var section = $('<section />').appendTo(article)
@@ -148,10 +148,10 @@ function render(params,article) {
 
 
 	// external HTML fragment, markdown
-	if ( params.src ){
-		if (params.type.match('rss|atom') )
+	if ( meta.src ){
+		if (meta.type.match('rss|atom') )
 			$.getFeed({
-				url: params.src,
+				url: meta.src,
 				error:function(){
 					section.text('Error retreiving feed')
 				},
@@ -162,13 +162,13 @@ function render(params,article) {
 			})
 		else
 			$.ajax({
-				url: params.src,
+				url: meta.src,
 				error:function(){
 					section.text('Error retrieving article')
 				},
 				dataType: 'html',
 				success: function(html){
-					if (params.type == 'markdown')
+					if (meta.type == 'markdown')
 						html = converter.makeHtml(html)
 
 					section.html(html)
