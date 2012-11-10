@@ -11,11 +11,18 @@ $(function(){
 	// calls many times. Article should set and test loading attribute
 	$(window).scroll(function(){
 		// test if last article has loaded or not
-		//if ($('.post').last().data('loading') ) return
+		if ($('section').last().data('loading') ) return
 
 		// test if last article is in view
-		//if ($(window).scrollTop() > $('.post').last().offset().top - $(window).height() )
-		//	console.log('Loading...')
+		if ($(window).scrollTop() > $('section').last().offset().top - $(window).height() ) {
+			var art  = $('nav a.active').data('article')
+			var meta = art.manifest.shift()
+
+			// no moar articles?
+			if (!meta) return
+
+			render(meta,art)
+		}
 	})
 })
 
@@ -36,7 +43,7 @@ function generateNav()
 		link.appendTo('nav')
 		link.click(showThisArticle)
 
-		link.one('mouseenter',function(){
+		link.one('mouseenter',function() {
 			initArticle(art)
 		})
 
@@ -121,7 +128,8 @@ function initArticle(art){
 					if (!i.title) i.title = i.src.match(/([^\/]+)\.[^.]+$/)
 
 				})
-				render(manifest[0],art)
+				// render and discard first manifest object
+				render(manifest.shift(),art)
 			},
 			error : function () {
 				art.text('Error loading manifest')
