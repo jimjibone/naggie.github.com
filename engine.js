@@ -142,7 +142,7 @@ function render(meta,article) {
 
 
 	// section onto article
-	var section = $('<section />').appendTo(article)
+	var section = $('<section />').appendTo(article).data('loading',true)
 	// apply loading gif to each external external article prior to load.
 	section.html('<div class="throbber"></div>')
 
@@ -158,6 +158,7 @@ function render(meta,article) {
 				success:function(feed){
 					var html = feed2html(feed)
 					section.html(html)
+					section.data('loading',false)
 				}
 			})
 		else
@@ -175,6 +176,7 @@ function render(meta,article) {
 					// syntax highlighting
 					$('pre code',section).each(function(i, e) {hljs.highlightBlock(e)})
 
+					section.data('loading',false)
 				}
 			})
 	}
