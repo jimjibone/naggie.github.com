@@ -157,15 +157,13 @@ function render(meta,article) {
 		else if (meta.src.match('\.html$') )
 			meta.type = 'html'
 
-
-	// section onto article
-	var section = $('<section />').appendTo(article).data('loading',true)
-	// apply loading gif to each external external article prior to load.
-	section.html('<div class="throbber"></div>')
-
-
 	// external HTML fragment, markdown
 	if ( meta.src ){
+		// section onto article
+		var section = $('<section />').appendTo(article).data('loading',true)
+		// apply loading gif to each external external article prior to load.
+		section.html('<div class="throbber"></div>')
+
 		if (meta.type.match('rss|atom') )
 			$.getFeed({
 				url: meta.src,
