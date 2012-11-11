@@ -216,6 +216,10 @@ pre code{
 font-size:14px;
 }
 
+.markdown {
+padding: 0 160px 0 160px;
+}
+
 .rss time, .markdown time {
 color:gray;
 font-style:italic;
