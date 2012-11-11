@@ -189,7 +189,7 @@ function render(meta,article) {
 					if (meta.type == 'markdown')
 						html = converter.makeHtml(html)
 
-					section.html(html)
+					section.html(html).addClass(meta.type)
 					var h1 = $('<h2 />').prependTo(section).text(meta.title)
 
 
