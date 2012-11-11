@@ -216,11 +216,7 @@ pre code{
 font-size:14px;
 }
 
-.rss .h2 {
-display:inline;
-}
-
-.rss time {
+.rss time, section time {
 color:gray;
 font-style:italic;
 font-weight:normal;
@@ -228,13 +224,13 @@ font-size:12px;
 margin-left:12px;
 }
 
-.rss .ref{
+.rss .ref, section .ref{
 display:none;
 color:gray;
 margin-bottom:12px;
 }
 
-.rss img{
+.rss img, section img{
 float:none;
 display:block;
 margin:40px auto;

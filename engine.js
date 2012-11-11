@@ -9,7 +9,7 @@ $(function(){
 
 	// infinite scrolling example
 	// calls many times. Article should set and test loading attribute
-	$(window).scroll(extendArticle)
+	$(window).scroll(addPosts)
 })
 
 // create elements representing pages
@@ -125,7 +125,8 @@ function initArticle(art){
 }
 
 // conditionally extend the article (add more posts)
-function extendArticle() {
+// for infinite scroll. Poll the function
+function addPosts() {
 	// test if last post has finished or not
 	if ($('section').last().data('loading') ) return
 
@@ -184,6 +185,14 @@ function render(meta,article) {
 						html = converter.makeHtml(html)
 
 					section.html(html)
+					var h1 = $('<h2 />').prependTo(section).text(meta.title)
+
+
+					if (meta.date)
+						$('<time />').attr('datetime', meta.date)
+							.text( relativeDate( new Date(meta.date) ) )
+							.appendTo(h1)
+
 					// syntax highlighting
 					$('pre code',section).each(function(i, e) {hljs.highlightBlock(e)})
 
