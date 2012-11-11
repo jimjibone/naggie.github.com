@@ -112,7 +112,7 @@ function initArticle(art){
 
 					// other defaults
 					// default to filename if title is not given
-					if (!i.title) i.title = i.src.match(/([^\/]+)\.[^.]+$/)
+					if (!i.title) i.title = i.src.match(/([^\/]+)\.[^.]+$/)[1]
 
 				})
 				// render and discard first manifest object
