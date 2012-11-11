@@ -24,7 +24,6 @@ Manifest parset expects a JSON (newest first) array of objects with the followin
   * `src`    : **source URL of article. Required. Relative to directory of manifest file**
   * `date`   : **a date javascript can understand with Date() object. Optional but recommended.**
   * `title`  : Optional, defaults to filename from Source
-  * `hash`   : a hash for caching. Defaults to date. Optional.
   * `author` : Optional name
   * `type`   : Optional (from file extension by default)
 
