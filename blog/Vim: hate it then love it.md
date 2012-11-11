@@ -1,6 +1,6 @@
 So I’ve been using vim every day for about 6 months now. You shouldn’t try it, you won’t like it. Just use it for as long as it takes you look down upon other editors.
 
-![blog/images/vim.png](vim)
+![vim](blog/images/vim.png)
 
 Starting to use vim is easy with vimtutor (which is simply a clever text file that you learn to manipulate with vim) which is great, but I don’t think anywhere really makes the genuinely useful functionality stand out. So here are a few tips:
 
