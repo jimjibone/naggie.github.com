@@ -190,8 +190,11 @@ function render(meta,article) {
 						html = converter.makeHtml(html)
 
 					section.html(html).addClass(meta.type)
-					var h1 = $('<h2 />').prependTo(section).text(meta.title)
+					var h1 = $('<h2 />').prependTo(section)
+						.text(meta.title)
 
+					if (meta.title)
+						section.append(meta.author).append('<hr />')
 
 					if (meta.date)
 						$('<time />').attr('datetime', meta.date)
