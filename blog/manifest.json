@@ -6,6 +6,12 @@
 		"type"  : "markdown"
 	},
 	{
+		"src" : "Simple node app deployment.md",
+		"date"  : "Mon Nov 03 2012 21:29:47 GMT+0000 (GMT)",
+		"author": "Callan Bryant",
+		"type"  : "markdown"
+	},
+	{
 		"src" : "Game devs: Please commit to open sourcing the engine.md",
 		"date"  : "Mon Nov 02 2012 21:29:47 GMT+0000 (GMT)",
 		"author": "Callan Bryant",
