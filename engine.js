@@ -76,6 +76,7 @@ function showThisArticle()
 	// need to init?
 	//if ( !$(this).data('article').data('ready') )
 		initArticle(art)
+		addPosts() // only if appropriate
 }
 
 function preloadArticles(){
@@ -115,7 +116,8 @@ function initArticle(art){
 
 				})
 				// render and discard first manifest object
-				render(manifest.shift(),art)
+				// and render next post if first is in in view
+				render(manifest.shift(),art, addPosts)
 			},
 			error : function () {
 				art.text('Error loading manifest')
@@ -144,7 +146,7 @@ function addPosts() {
 
 // render a section onto an article
 // replacing a loading gif with the article
-function render(meta,article) {
+function render(meta,article,cb) {
 	// defaults
 	if (!meta.type && meta.src)
 		if (meta.src.match('\.md$') )
@@ -171,6 +173,7 @@ function render(meta,article) {
 					var html = feed2html(feed)
 					section.html(html)
 					section.data('loading',false)
+					cb()
 				}
 			})
 		else
@@ -197,6 +200,7 @@ function render(meta,article) {
 					$('pre code',section).each(function(i, e) {hljs.highlightBlock(e)})
 
 					section.data('loading',false)
+					cb()
 				}
 			})
 	}
