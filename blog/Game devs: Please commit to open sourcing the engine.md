@@ -18,6 +18,6 @@ Maybe there could be an emblem or something to indicate the commitment.
 
 [1]: https://www.google.co.uk/search?sugexp=chrome,mod=11&sourceid=chrome&ie=UTF-8&q=diablo%2BII%2Bwindows%2B7
 [2]: https://www.google.co.uk/search?sugexp=chrome,mod=11&sourceid=chrome&ie=UTF-8&q=system%2Bshock%2B2%2Bwindows%2B7
-[3]: http://www.freepcgames.in/uploads/9/5/8/7/9587776/185567386_orig.jpg?430 "Doom 3 Gameplay"
+[3]: blog/images/doom.jpg "Doom 3 Gameplay"
 [4]: https://github.com/id-Software
 [5]: http://www.minecraft.net/game
