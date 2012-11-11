@@ -76,7 +76,7 @@ function showThisArticle()
 	// need to init?
 	//if ( !$(this).data('article').data('ready') )
 		initArticle(art)
-		addPosts() // only if appropriate
+		//addPosts() // only if appropriate
 }
 
 function preloadArticles(){
@@ -117,7 +117,7 @@ function initArticle(art){
 				})
 				// render and discard first manifest object
 				// and render next post if first is in in view
-				render(manifest.shift(),art, addPosts)
+				render(manifest.shift(),art)//, addPosts)
 			},
 			error : function () {
 				art.text('Error loading manifest')
