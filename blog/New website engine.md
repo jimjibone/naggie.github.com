@@ -2,7 +2,7 @@ Hopefully you’re reading this blog from <http://callanbryant.co.uk/> rather th
 
 My new website engine is now able to read RSS feeds thanks to the incredibly easy-to-use jFeed. This was after writing my own (jQuery based) parser which worked, but supporting the inconsistencies of RSS or ATOM was not worth the bother.
 
-![Website engine](images/engine.png)
+![Website engine](blog/images/engine.png)
 
 The engine automatically integrates articles, linking to them on the nav bar above; supporting embedded or external source in HTML, markdown or RSS.
 
