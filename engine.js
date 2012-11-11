@@ -190,7 +190,7 @@ function render(meta,article) {
 						html = converter.makeHtml(html)
 
 					section.html(html).addClass(meta.type)
-					var h1 = $('<h2 />').prependTo(section)
+					var h1 = $('<h1 />').prependTo(section)
 						.text(meta.title)
 
 					if (meta.title)

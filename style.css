@@ -220,12 +220,18 @@ font-size:14px;
 padding: 0 120px 0 120px;
 }
 
+.markdown h1 {
+font-size:36px;
+color:gray;
+}
+
 .rss time, .markdown time {
 color:gray;
+vertical-align:middle;
 font-style:italic;
 font-weight:normal;
 font-size:12px;
-margin-left:12px;
+margin-left:22px;
 }
 
 .rss .ref, .markdown .ref{
