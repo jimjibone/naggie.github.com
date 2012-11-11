@@ -15,7 +15,7 @@ Starting to use vim is easy with vimtutor (which is simply a clever text file th
 *   **cw** will change the current word
 *   **vim -p** will open a set of files in tabs. **-o** will open in a split buffer, and **-O** will do the same, but vertically
 *   When on the command line, **Ctrl+b f** will allow you to edit the command line vi-style. **Ctrl+B C** will exit this mode.
-*   **Ctrl+B [ **is better than **ESC** as you don’t have the leave the home keys
+*   **Ctrl+[** may be better than **ESC** as you don’t have the leave the home keys
 *   add **set -o vi** to your bashrc for (default insert-mode) readline editing!
 *   **J** will join the next line on the end of the current line
 *   **vi{** to visual mode select in {} parenthesis. Then **zf** to fold that section.
