@@ -76,7 +76,7 @@ function showThisArticle()
 	// need to init?
 	//if ( !$(this).data('article').data('ready') )
 		initArticle(art)
-		//addPosts() // only if appropriate
+		addPosts() // only if appropriate
 }
 
 function preloadArticles(){
@@ -117,7 +117,7 @@ function initArticle(art){
 				})
 				// render and discard first manifest object
 				// and render next post if first is in in view
-				render(manifest.shift(),art)//, addPosts)
+				render(manifest.shift(),art)
 			},
 			error : function () {
 				art.text('Error loading manifest')
@@ -129,12 +129,15 @@ function initArticle(art){
 // conditionally extend the article (add more posts)
 // for infinite scroll. Poll the function
 function addPosts() {
+	// a section in view?
+	if (!$('section:visible').length) return
 	// test if last post has finished or not
 	if ($('section').last().data('loading') ) return
 
 	// test if last article is in view
 	if ($(window).scrollTop() > $('section').last().offset().top - $(window).height() ) {
 		var art  = $('nav a.active').data('article')
+		if (!art.manifest) return
 		var meta = art.manifest.shift()
 
 		// no moar articles?
@@ -146,7 +149,7 @@ function addPosts() {
 
 // render a section onto an article
 // replacing a loading gif with the article
-function render(meta,article,cb) {
+function render(meta,article) {
 	// defaults
 	if (!meta.type && meta.src)
 		if (meta.src.match('\.md$') )
@@ -173,7 +176,6 @@ function render(meta,article,cb) {
 					var html = feed2html(feed)
 					section.html(html)
 					section.data('loading',false)
-					cb()
 				}
 			})
 		else
@@ -200,7 +202,6 @@ function render(meta,article,cb) {
 					$('pre code',section).each(function(i, e) {hljs.highlightBlock(e)})
 
 					section.data('loading',false)
-					cb()
 				}
 			})
 	}
