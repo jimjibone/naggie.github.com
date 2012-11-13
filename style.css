@@ -220,9 +220,10 @@ font-size:14px;
 padding: 0 120px 0 120px;
 }
 
-.markdown h1 {
+.markdown h1 ,.rss h1, .rss h1 a{
 font-size:28px;
 font-weight:normal;
+text-decoration:none;
 }
 
 .rss time, .markdown time {
