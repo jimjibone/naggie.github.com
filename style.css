@@ -50,6 +50,14 @@ width:1920px;
 */
 }
 
+#backdrop img {
+position:absolute;
+width:1920px;
+height:300px;
+left:50%;
+margin-left:-960px;
+}
+
 nav
 {
 min-height:22px;
