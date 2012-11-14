@@ -234,12 +234,15 @@ font-weight:normal;
 text-decoration:none;
 }
 
-.rss time, .markdown time {
+.rss time, .markdown time, .note {
 color:gray;
 vertical-align:middle;
 font-style:italic;
 font-weight:normal;
 font-size:12px;
+}
+
+.rss time, .markdown time {
 margin-left:22px;
 }
 

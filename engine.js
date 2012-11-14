@@ -192,11 +192,16 @@ function render(meta,article) {
 						.text(meta.title)
 
 					if (meta.title)
-						section.append(meta.author).append('<hr />')
+						section.append('<hr />')
 
 					if (meta.date)
 						$('<time />').attr('datetime', meta.date)
 							.text( relativeDate( new Date(meta.date) ) )
+							.appendTo(h1)
+
+					if (meta.author)
+						$('<span />').addClass('note')
+							.text(' by ').append(meta.author)
 							.appendTo(h1)
 
 					// syntax highlighting
