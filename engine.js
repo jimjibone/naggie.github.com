@@ -106,15 +106,15 @@ function initArticle(art){
 			success : function(manifest) {
 				dir = art.data('src').replace(/[^\/]*$/,'')
 				art.data('manifest',manifest)
-				manifest.forEach(function(i){
+				for (var i in manifest) {
 					// paths relative to manifest
-					i.src = dir + i.src
+					manifest[i].src = dir + manifest[i].src
 
 					// other defaults
 					// default to filename if title is not given
-					if (!i.title) i.title = i.src.match(/([^\/]+)\.[^.]+$/)[1]
+					if (!manifest[i].title) manifest[i].title = manifest[i].src.match(/([^\/]+)\.[^.]+$/)[1]
 
-				})
+				}
 				// render and discard first manifest object
 				// and render next post if first is in in view
 				render(manifest.shift(),art)
