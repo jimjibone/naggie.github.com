@@ -105,7 +105,7 @@ function initArticle(art){
 			url: art.data('src'),
 			success : function(manifest) {
 				dir = art.data('src').replace(/[^\/]*$/,'')
-				art.manifest = manifest,
+				art.data('manifest',manifest)
 				manifest.forEach(function(i){
 					// paths relative to manifest
 					i.src = dir + i.src
@@ -137,8 +137,8 @@ function addPosts() {
 	// test if last article is in view
 	if ($(window).scrollTop() > $('section').last().offset().top - $(window).height() ) {
 		var art  = $('nav a.active').data('article')
-		if (!art.manifest) return
-		var meta = art.manifest.shift()
+		if (!art.data('manifest')) return
+		var meta = art.data('manifest').shift()
 
 		// no moar articles?
 		if (!meta) return
