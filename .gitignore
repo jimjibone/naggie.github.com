@@ -5,3 +5,4 @@
 *.rss
 *.atom
 all.js
+node_modules/*
