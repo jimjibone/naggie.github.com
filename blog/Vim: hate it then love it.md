@@ -11,10 +11,10 @@ Starting to use vim is easy with vimtutor (which is simply a clever text file th
 *   **cc** blanks the line and puts you into insert mode
 *   **O** and **o** creates a newline above and below the current line respectively
 *   **ddp** swaps the current line with the next
-*   **ci **followed by a delimiter will change text within that delimiter. For example, **ci’** will change **beans** in **‘beans’**
+*   **ci** followed by a delimiter will change text within that delimiter. For example, **ci"** will change **beans** in **"beans"**
 *   **cw** will change the current word
 *   **vim -p** will open a set of files in tabs. **-o** will open in a split buffer, and **-O** will do the same, but vertically
-*   When on the command line, **Ctrl+b f** will allow you to edit the command line vi-style. **Ctrl+C** will exit this mode.
+*   When on the command line, **Ctrl+f** will allow you to edit the command line vi-style. **Ctrl+C** will exit this mode.
 *   **Ctrl+[** may be better than **ESC** as you don’t have the leave the home keys
 *   add **set -o vi** to your bashrc for (default insert-mode) readline editing!
 *   **J** will join the next line on the end of the current line
