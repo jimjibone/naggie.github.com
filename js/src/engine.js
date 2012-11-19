@@ -1,5 +1,3 @@
-var $ = require('jQuery')
-
 // TODO: select a target on Instantiation?
 // This way infinite scrolling could be much more clever. And also only enable itself conditionally.
 // perhaps instantiate with URL?
@@ -8,6 +6,19 @@ function engine() {
 
 	// initialise infinite scroll event handlers
 	//$(window).scroll(this.continue)
+
+	// showdown markdoen parser
+	md = new Showdown.converter()
+
+	// item to be rendered by renderer
+	var item = function() {
+		this.html = ''
+		this.loaded = false
+
+		this.load = function(callback) {
+
+		}
+	}
 
 	// PARSERS, GIVEN A URL, MUST RETURN AN ARRAY OF OBJECTS TO THE GIVEN CALLBACK:
 	//
@@ -21,6 +32,7 @@ function engine() {
 	// Single articles will return a 1-item array. Manifests and feeds, multi.
 	// This is known as a roster
 	// Problem? call back with (false,error)
+	// given src, relative dir
 	this.parsers = {}
 
 	// use the google RSS->JSONP feed API to get an RSS feed cross-domain
@@ -48,22 +60,41 @@ function engine() {
 		})
 	}
 
-	this.parsers.manifest = function(src) {
-
+	this.parsers.manifest = function(src,callback) {
+		
 	}
 
-	this.parsers.markdown = function(src) {
+	this.parsers.raw = function(src,callback) {
+			$.ajax({
+			url      : src,
+			dataType : 'html',
+			error    : function(err) { callback(false,err) },
+			success  : function(res) {
 
+				callback([{
+					html   : html
+				}])
+			}
+		})
 	}
 
-	this.parsers.html = function(src) {
+	this.parsers.markdown = function(src,callback) {
+		this.parsers.raw(src,function(roster){
+			// convert markdown to HTML
+			roster[0].html = converter.makeHtml(roster[0].html)
 
+			// TODO convert relative links to that of URL  (via this.dir is multi-instantiation is used)
+
+			callback(roster)
+		})
 	}
+
+	this.parsers.html = this.parsers.raw
 
 	// renderer. Given an item from a renderer and a jQuery DOM object to append to.
 	// When engine is instantited (DOM must be ready) infinite scrolling is handled.
 	// expects one item from the array.
-	this.render = function(items,target) {}
+	this.render = function(item,target) {}
 
 
 
@@ -78,7 +109,7 @@ function engine() {
 	// expects one item from the array.
 	// Looks for section parents
 	// TODO: or known targets
-	this.icontinue = function() {
+	this.evaluate = function(items) {
 
 /*
 		if (!$('section:visible').length) return
@@ -100,10 +131,3 @@ function engine() {
 */
 	}
 }
-
-var e = new engine()
-e.parsers.rss('http://callanbryant.wordpress.com/feed/', function(roster){
-	roster.forEach(function(item){
-		console.log(item.title)
-	})
-})
