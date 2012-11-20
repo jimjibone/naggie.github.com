@@ -84,22 +84,24 @@ function engine() {
 				var roster = []
 
 				for (var i in blog) {
-					roster[i] = function(callback) {
-						// paths relative to blog
-						var src  = dir + blog[i].src
+					// paths relative to blog
+					blog[i].src = dir + blog[i].src
 
-						parsers.markdown(src,function(roster) {
-							roster[0].type = 'blog'
+					// closure to fix reference problems http://stackoverflow.com/questions/2900839/how-to-structure-javascript-callback-so-that-function-scope-is-maintained-proper
+					roster[i] = (function(src){
+						return function(callback) {
+							parsers.markdown(src,function(roster) {
+								roster[0].type = 'blog'
 
-							// other defaults
-							// default to filename if title is not given
-							if (!roster[0].title)
-								roster[0].title = src.match(/([^\/]+)\.[^.]+$/)[1]
+								// other defaults
+								// default to filename if title is not given
+								if (!roster[0].title)
+									roster[0].title = blog[i].src.match(/([^\/]+)\.[^.]+$/)[1]
 
-							callback(roster[0])
-						})
-					}
-
+								callback(roster[0])
+							})
+						}
+					})(blog[i].src)
 				}
 
 				callback(roster)
