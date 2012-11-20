@@ -5,9 +5,10 @@
 function engine() {
 
 	// initialise infinite scroll event handlers
-	//$(window).scroll(this.continue)
+	// TODO: unbind on completion
+	$(window).scroll(this.continue)
 
-	// showdown markdoen parser
+	// showdown markdown parser
 	md = new Showdown.converter()
 
 	// item to be rendered by renderer
@@ -19,6 +20,16 @@ function engine() {
 
 		}
 	}
+
+	// every minute, update relative dates (TODO: multi instance match current or global)
+	setInterval( function() {
+		$('time[datetime]').each(function(){
+			var absdate = new Date( $(this).attr('datetime') )
+			$(this).text( relativeDate(absdate) )
+		})
+	} ,30000)
+
+
 
 	// PARSERS, GIVEN A URL, MUST RETURN AN ARRAY OF OBJECTS TO THE GIVEN CALLBACK:
 	//
@@ -41,7 +52,7 @@ function engine() {
 			url      : 'https://ajax.googleapis.com/ajax/services/feed/load',
 			data     : { v:'1.0', q: src },
 			type     : 'GET',
-			dataType : 'json',
+			dataType : 'jsonp',
 			error    : function(err) { callback(false,err) },
 			success  : function(res) {
 				var entries = res.responseData.feed.entries
@@ -61,7 +72,26 @@ function engine() {
 	}
 
 	this.parsers.manifest = function(src,callback) {
-		
+		$.ajax({
+			url: src,
+			success : function(manifest) {
+				dir = src.replace(/[^\/]*$/,'')
+
+				for (var i in manifest) {
+					// paths relative to manifest
+					manifest[i].src = dir + manifest[i].src
+
+					// other defaults
+					// default to filename if title is not given
+					if (!manifest[i].title) manifest[i].title = manifest[i].src.match(/([^\/]+)\.[^.]+$/)[1]
+				}
+
+				callback(roster)
+			},
+			error    : function(err) { callback(false,err) },
+			dataType : 'json'
+		})
+
 	}
 
 	this.parsers.raw = function(src,callback) {
@@ -70,10 +100,7 @@ function engine() {
 			dataType : 'html',
 			error    : function(err) { callback(false,err) },
 			success  : function(res) {
-
-				callback([{
-					html   : html
-				}])
+				callback([{ html: res }])
 			}
 		})
 	}
