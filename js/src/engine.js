@@ -64,7 +64,8 @@ function engine() {
 						url    : entries[i].url,
 						html   : entries[i].content,
 						date   : entries[i].publishedDate,
-						author : entries[i].author
+						author : entries[i].author,
+						type   : 'blog'
 					}
 
 				callback(roster)
@@ -82,7 +83,8 @@ function engine() {
 
 				for (var i in blog) {
 					// paths relative to blog
-					blog[i].src = dir + blog[i].src
+					blog[i].src  = dir + blog[i].src
+					blog[i].type = 'blog'
 
 					// other defaults
 					// default to filename if title is not given
@@ -126,7 +128,7 @@ function engine() {
 	// expects one item from the array. Can be object or callback defering object.
 	this.render = function(load,target) {
 
-		var section = $('<section />').appendTo(article).data('loading',true)
+		var section = $('<section />').appendTo(target).data('loading',true)
 
 		// convert item into callback
 		if (typeof load == 'object') {
@@ -145,7 +147,7 @@ function engine() {
 
 		// load the item
 		load(function(item){
-			section.html(html)
+			section.html(item.html).addClass(item.type)
 			var h1 = $('<h1 />').prependTo(section)
 				.text(item.title)
 
@@ -196,8 +198,12 @@ function engine() {
 */
 	}
 }
+/*
+var f = new engine()
+f.parsers.rss('http://www.google.com/reader/public/atom/user%2F15749961360086107608%2Fstate%2Fcom.google%2Fstarred',function(roster){
+	var target = $('nav a.active').data('article').empty()
 
-//var f = new engine()
-//f.parsers.rss('http://www.google.com/reader/public/atom/user%2F15749961360086107608%2Fstate%2Fcom.google%2Fstarred',function(roster){
-//	console.log(roster.length, roster)
-//})
+	for (var i in roster)
+		f.render(roster[i],target)
+})
+*/
