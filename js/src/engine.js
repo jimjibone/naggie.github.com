@@ -40,7 +40,7 @@ function engine() {
 	//      date   : date published. Optional,
 	//      author : name of publisher. Optional
 	//   }
-	// Single articles will return a 1-item array. Manifests and feeds, multi.
+	// Single articles will return a 1-item array. blogs and feeds, multi.
 	// This is known as a roster
 	// Problem? call back with (false,error)
 	// given src, relative dir
@@ -72,19 +72,21 @@ function engine() {
 		})
 	}
 
-	this.parsers.manifest = function(src,callback) {
+	// JSON manifest of markdown blog articles: array of ojects detailing
+	// src (rel. to manifest), title (optional), author (optional), date (optional)
+	this.parsers.blog = function(src,callback) {
 		$.ajax({
 			url: src,
-			success : function(manifest) {
+			success : function(blog) {
 				dir = src.replace(/[^\/]*$/,'')
 
-				for (var i in manifest) {
-					// paths relative to manifest
-					manifest[i].src = dir + manifest[i].src
+				for (var i in blog) {
+					// paths relative to blog
+					blog[i].src = dir + blog[i].src
 
 					// other defaults
 					// default to filename if title is not given
-					if (!manifest[i].title) manifest[i].title = manifest[i].src.match(/([^\/]+)\.[^.]+$/)[1]
+					if (!blog[i].title) blog[i].title = blog[i].src.match(/([^\/]+)\.[^.]+$/)[1]
 				}
 
 				callback(roster)
@@ -182,8 +184,8 @@ function engine() {
 		// test if last article is in view
 		if ($(window).scrollTop() > $('section').last().offset().top - $(window).height() ) {
 			var art  = $('nav a.active').data('article')
-			if (!art.data('manifest')) return
-			var meta = art.data('manifest').shift()
+			if (!art.data('blog')) return
+			var meta = art.data('blog').shift()
 
 			// no moar articles?
 			if (!meta) return
