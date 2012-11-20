@@ -122,21 +122,26 @@ function engine() {
 	// renderer. Given an item from a renderer and a jQuery DOM object to append to.
 	// When engine is instantited (DOM must be ready) infinite scrolling is handled.
 	// expects one item from the array. Can be object or callback defering object.
-	var render = this.render = function(load,target) {
+	this.render = function(load,target) {
 
-		// overloading for non-deferred items
-		if (typeof load == 'object')
-			// load is actually now an item
-			return parent.render(function(callback){
-				callback(load)
-			},target)
-
-
-		// section onto targer
 		var section = $('<section />').appendTo(article).data('loading',true)
-		// apply loading gif which will be replaced with this item
-		section.html('<div class="throbber"></div>')
 
+		// convert item into callback
+		if (typeof load == 'object') {
+			// IMMEDIATE RENDERING
+			// load is actually an item
+			var item = load
+			var load = function(callback){
+				callback(item)
+			}
+		} else
+			// DEFERRED RENDERING
+			// section onto targer
+			// apply loading gif which will be replaced with this item
+			section.html('<div class="throbber"></div>')
+
+
+		// load the item
 		load(function(item){
 			section.html(html)
 			var h1 = $('<h1 />').prependTo(section)
@@ -159,15 +164,8 @@ function engine() {
 			$('pre code',section).each(function(i, e) {hljs.highlightBlock(e)})
 
 			section.data('loading',false)
-
 		})
 	}
-
-
-	// Callbacks are deferred until they are needed to render (eg: infinite scrolling)
-	// Renders until first callback object is founf
-
-
 
 	// will continue to render more items if appropriate
 	// a previous article must be visible and loaded first
