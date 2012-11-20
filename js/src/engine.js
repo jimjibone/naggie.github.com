@@ -45,16 +45,16 @@ function engine() {
 	// Problem? call back with (false,error)
 	// given src, relative dir
 	// OR CALLBACK RETURNING ITEM FOR DEFERRED RENDERING
-	this.parsers = {}
+	var parsers = this.parsers = {}
 
 	// use the google RSS->JSONP feed API to get an RSS feed cross-domain
-	this.parsers.rss = function(src,callback) {
+	this.parsers.rss = this.parsers.rss = function(src,callback) {
 		$.ajax({
 			url      : 'https://ajax.googleapis.com/ajax/services/feed/load',
 			data     : { v:'1.0', q: src , num: -1},
 			type     : 'GET',
 			dataType : 'jsonp',
-			error    : function(err) { callback(false,err) },
+			error    : function(xqHXR,stat,err) { callback(stat) },
 			success  : function(res) {
 				var entries = res.responseData.feed.entries
 				var roster = []
@@ -79,31 +79,42 @@ function engine() {
 		$.ajax({
 			url: src,
 			success : function(blog) {
-				dir = src.replace(/[^\/]*$/,'')
+				var dir = src.replace(/[^\/]*$/,'')
+
+				var roster = []
 
 				for (var i in blog) {
-					// paths relative to blog
-					blog[i].src  = dir + blog[i].src
-					blog[i].type = 'blog'
+					roster[i] = function(callback) {
+						// paths relative to blog
+						var src  = dir + blog[i].src
 
-					// other defaults
-					// default to filename if title is not given
-					if (!blog[i].title) blog[i].title = blog[i].src.match(/([^\/]+)\.[^.]+$/)[1]
+						parsers.markdown(src,function(roster) {
+							roster[0].type = 'blog'
+
+							// other defaults
+							// default to filename if title is not given
+							if (!roster[0].title)
+								roster[0].title = src.match(/([^\/]+)\.[^.]+$/)[1]
+
+							callback(roster[0])
+						})
+					}
+
 				}
 
 				callback(roster)
 			},
-			error    : function(err) { callback(false,err) },
+			error    : function(xqHXR,stat,err) { callback(stat) },
 			dataType : 'json'
 		})
 
 	}
 
 	this.parsers.raw = function(src,callback) {
-			$.ajax({
+		$.ajax({
 			url      : src,
 			dataType : 'html',
-			error    : function(err) { callback(false,err) },
+			error    : function(xqHXR,stat,err) { callback(stat) },
 			success  : function(res) {
 				callback([{ html: res }])
 			}
@@ -111,7 +122,7 @@ function engine() {
 	}
 
 	this.parsers.markdown = function(src,callback) {
-		this.parsers.raw(src,function(roster){
+		parsers.raw(src,function(roster){
 			// convert markdown to HTML
 			roster[0].html = converter.makeHtml(roster[0].html)
 
@@ -198,12 +209,21 @@ function engine() {
 */
 	}
 }
-/*
-var f = new engine()
-f.parsers.rss('http://www.google.com/reader/public/atom/user%2F15749961360086107608%2Fstate%2Fcom.google%2Fstarred',function(roster){
-	var target = $('nav a.active').data('article').empty()
 
+
+var f = new engine()
+//f.parsers.rss('http://www.google.com/reader/public/atom/user%2F15749961360086107608%2Fstate%2Fcom.google%2Fstarred',function(roster){
+f.parsers.blog('blog/manifest.json',function(roster,err,stat){
+	var target = $('nav a.active').data('article').empty()
 	for (var i in roster)
 		f.render(roster[i],target)
+})
+
+
+/*
+var f = new engine()
+f.parsers.markdown('/blog/Single%20window%20Gimp%202.8%20on%20Mac%20OS%20X.md',function(i) {
+	var target = $('nav a.active').data('article').empty()
+	f.render(i[0],target)
 })
 */
