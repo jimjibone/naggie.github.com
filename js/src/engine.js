@@ -87,6 +87,7 @@ function engine() {
 					// paths relative to blog
 					blog[i].src = dir + blog[i].src
 
+					// set a callback for each roster item pre-programmed to return that particular item using a
 					// closure to fix reference problems http://stackoverflow.com/questions/2900839/how-to-structure-javascript-callback-so-that-function-scope-is-maintained-proper
 					roster[i] = (function(src){
 						return function(callback) {
@@ -96,7 +97,7 @@ function engine() {
 								// other defaults
 								// default to filename if title is not given
 								if (!roster[0].title)
-									roster[0].title = blog[i].src.match(/([^\/]+)\.[^.]+$/)[1]
+									roster[0].title = src.match(/([^\/]+)\.[^.]+$/)[1]
 
 								callback(roster[0])
 							})
