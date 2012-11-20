@@ -36,7 +36,7 @@ function engine() {
 	//   {
 	//      title  : optional,
 	//	url    : optional,
-	//      html   : string or callback returning string or false on error,
+	//      html   : string or false on error,
 	//      date   : date published. Optional,
 	//      author : name of publisher. Optional
 	//   }
@@ -44,6 +44,7 @@ function engine() {
 	// This is known as a roster
 	// Problem? call back with (false,error)
 	// given src, relative dir
+	// OR CALLBACK RETURNING ITEM FOR DEFERRED RENDERING
 	this.parsers = {}
 
 	// use the google RSS->JSONP feed API to get an RSS feed cross-domain
@@ -120,10 +121,47 @@ function engine() {
 
 	// renderer. Given an item from a renderer and a jQuery DOM object to append to.
 	// When engine is instantited (DOM must be ready) infinite scrolling is handled.
-	// expects one item from the array.
-	this.render = function(item,target) {}
+	// expects one item from the array. Can be object or callback defering object.
+	var render = this.render = function(load,target) {
+
+		// overloading for non-deferred items
+		if (typeof load == 'object')
+			// load is actually now an item
+			return parent.render(function(callback){
+				callback(load)
+			},target)
 
 
+		// section onto targer
+		var section = $('<section />').appendTo(article).data('loading',true)
+		// apply loading gif which will be replaced with this item
+		section.html('<div class="throbber"></div>')
+
+		load(function(item){
+			section.html(html)
+			var h1 = $('<h1 />').prependTo(section)
+				.text(item.title)
+
+			if (item.title)
+				section.append('<hr />')
+
+			if (item.date)
+				$('<time />').attr('datetime', item.date)
+					.text( relativeDate( new Date(item.date) ) )
+					.appendTo(h1)
+
+			if (item.author)
+				$('<span />').addClass('note')
+					.text(' by ').append(item.author)
+					.appendTo(h1)
+
+			// syntax highlighting
+			$('pre code',section).each(function(i, e) {hljs.highlightBlock(e)})
+
+			section.data('loading',false)
+
+		})
+	}
 
 
 	// Callbacks are deferred until they are needed to render (eg: infinite scrolling)
