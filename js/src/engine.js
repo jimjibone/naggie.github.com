@@ -6,10 +6,10 @@ function engine() {
 
 	// initialise infinite scroll event handlers
 	// TODO: unbind on completion
-	$(window).scroll(this.continue)
+	//$(window).scroll(this.continue)
 
 	// showdown markdown parser
-	md = new Showdown.converter()
+	var md = new Showdown.converter()
 
 	// item to be rendered by renderer
 	var item = function() {
@@ -50,13 +50,12 @@ function engine() {
 	this.parsers.rss = function(src,callback) {
 		$.ajax({
 			url      : 'https://ajax.googleapis.com/ajax/services/feed/load',
-			data     : { v:'1.0', q: src },
+			data     : { v:'1.0', q: src , num: -1},
 			type     : 'GET',
 			dataType : 'jsonp',
 			error    : function(err) { callback(false,err) },
 			success  : function(res) {
 				var entries = res.responseData.feed.entries
-
 				var roster = []
 				for (var i in entries)
 					roster[i] = {
@@ -66,6 +65,7 @@ function engine() {
 						date   : entries[i].publishedDate,
 						author : entries[i].author
 					}
+
 				callback(roster)
 			}
 		})
@@ -158,3 +158,8 @@ function engine() {
 */
 	}
 }
+
+//var f = new engine()
+//f.parsers.rss('http://www.google.com/reader/public/atom/user%2F15749961360086107608%2Fstate%2Fcom.google%2Fstarred',function(roster){
+//	console.log(roster.length, roster)
+//})
