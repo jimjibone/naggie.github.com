@@ -8,7 +8,6 @@ cd $(dirname "$0")
 closure-compiler \
 	--js src/showdown.js \
 	--js src/jquery.hotkeys.js \
-	--js src/jquery.jfeed.pack.js \
 	--js src/relativeDate.js \
 	--js src/engine.js \
 	--js src/client.js \
@@ -21,7 +20,6 @@ exit
 (
 	cat src/showdown.js
 	cat src/jquery.hotkeys.js
-	cat src/jquery.jfeed.pack.js
 	cat src/relativeDate.js
 	cat src/engine.js
 	cat src/client.js
