@@ -224,17 +224,17 @@ pre code{
 font-size:14px;
 }
 
-.markdown {
+.blog {
 padding: 0 120px 0 120px;
 }
 
-.markdown h1 ,.rss h1, .rss h1 a{
+.blog h1, .blog h1 a{
 font-size:28px;
 font-weight:normal;
 text-decoration:none;
 }
 
-.rss time, .markdown time, .note {
+.blog time, .note {
 color:gray;
 vertical-align:middle;
 font-style:italic;
@@ -242,17 +242,17 @@ font-weight:normal;
 font-size:12px;
 }
 
-.rss time, .markdown time {
+.blog time {
 margin-left:22px;
 }
 
-.rss .ref, .markdown .ref{
+.blog .ref{
 display:none;
 color:gray;
 margin-bottom:12px;
 }
 
-.rss img, .markdown img{
+.blog img{
 float:none;
 display:block;
 margin:40px auto;
@@ -275,8 +275,8 @@ box-shadow:2px 2px 2px gray;
 background:#f8f8ff;
 }
 
-/* don't put above class on RSS hack images (tracking pixels, link text images etc)*/
-.rss a[rel="nofollow"] img,.rss img[height="1"],.rss img[border="0"]{
+/* don't put above class on blog hack images (tracking pixels, link text images etc)*/
+.blog a[rel="nofollow"] img,.blog img[height="1"],.blog img[border="0"]{
 border:0;
 margin:0;
 padding:0;

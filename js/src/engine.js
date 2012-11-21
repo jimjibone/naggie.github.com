@@ -1,394 +1,233 @@
 // Copyright Callan Bryant 2011-2012 <callan.bryant@gmail.com> http://callanbryant.co.uk
 // All rights reserved.
+function engine(options) {
+	var md = new Showdown.converter()
 
-var converter = new Showdown.converter()
-$(function(){
-	generateNav()
-	animations()
-	hotkeys()
+	// defaults
+	if (!options.type && options.src)
+		if (options.src.match('\.md$') )
+			options.type = 'markdown'
+		else if (options.src.match('\.html$') )
+			options.type = 'html'
+		else if (options.src.match('rss|atom$') )
+			options.type = 'rss'
+		else if (options.src.match(/manifest\.json$/) )
+			options.type = 'blog'
 
-	// infinite scrolling example
-	// calls many times. Article should set and test loading attribute
-	$(window).scroll(addPosts)
-})
+	if (!options.src)
+		return console.log('src required', options)
 
-// create elements representing pages
-// with attached events
-function generateNav()
-{
-	$('nav').empty()
-	$('article[data-name]').each(function(index,art){
-		// jquery-ify
-		art = $(art)
-
-		// safe URL hash for link
-		var hash = '#'+art.data('name').replace(/[^0-9a-z]+/gi,'-')
-
-		var link= $("<a />").addClass('service')
-		link.text(art.data('name'))
-		link.appendTo('nav')
-		link.click(showThisArticle)
-
-		link.one('mouseenter',function() {
-			initArticle(art)
-		})
-
-		// attach reference to element so it can be shown later
-		link.data('article',art)
-
-		// attach link
-		link.attr('href',hash)
-
-		// title (to be made nice with bootstrap tooltips or tipsy)
-		link.attr('title', art.data('hint') )
-
-		if(document.location.hash == hash)
-			link.each(showThisArticle)
-
-		// no hash or empty hash
-		if (art.hasClass('default') && document.location.hash.length <=1)
-			link.each(showThisArticle)
-	})
-}
-
-// show article, given nav link in 'this' context
-function showThisArticle()
-{
-	var art = $(this).data('article')
-
-	// hide all other articles
-	$('article').hide()
-	// show this one
-	art.show().text()
-
-	// clear active on all other service
-	$('nav .service').removeClass('active')
-	// select this link
-	$(this).addClass('active')
-
-	// update hash location (when active, not clicked)
-	// also only give the default article a hash if explicitly active
-	if( !art.hasClass('default') || document.location.hash)
-		document.location.hash = $(this).attr('href')
-
-	$('.articles header').html(  art.data('hint') )
-
-	// need to init?
-	//if ( !$(this).data('article').data('ready') )
-		initArticle(art)
-		addPosts() // only if appropriate
-}
-
-function preloadArticles(){
-	$('article[data-preload]').each(function(){
-		initArticle($(this))
-	})
-}
-
-// initialise the article, given the mathing jQuery object
-function initArticle(art){
-	// only want to call this once...
-	if (art.data('ready'))
-		return false
-
-	// set flag so function is not called again
-	art.data('ready',true)
-
-	if (art.data('type') !== 'manifest')
-		render({
-			title : undefined,
-			type  : art.data('type'),
-			src   : art.data('src')
-		},art)
+	if (!options.target)
+		return console.log('target DOM element required', options)
 	else
+		// ensure jQuery
+		options.target = $(options.target)
+
+	this.target = options.target
+
+	var roster = []
+
+	// lock to render only one at a time during infinite scroll
+	var busy  = false
+	var ready = false
+
+	// PARSERS, GIVEN A URL, MUST RETURN AN ARRAY OF OBJECTS TO THE GIVEN CALLBACK:
+	//
+	//   {
+	//      title  : optional,
+	//	url    : optional,
+	//      html   : string or false on error,
+	//      date   : date published. Optional,
+	//      author : name of publisher. Optional
+	//   }
+	// Single articles will return a 1-item array. blogs and feeds, multi.
+	// This is known as a roster
+	// Problem? call back with (false,error)
+	// given src, relative dir
+	// OR CALLBACK RETURNING ITEM FOR DEFERRED RENDERING
+	var parsers = {}
+
+	// use the google RSS->JSONP feed API to get an RSS feed cross-domain
+	parsers.rss = parsers.atom = function(src,callback) {
 		$.ajax({
-			url: art.data('src'),
-			success : function(manifest) {
-				dir = art.data('src').replace(/[^\/]*$/,'')
-				art.data('manifest',manifest)
-				for (var i in manifest) {
-					// paths relative to manifest
-					manifest[i].src = dir + manifest[i].src
+			url      : 'https://ajax.googleapis.com/ajax/services/feed/load',
+			data     : { v:'1.0', q: src , num: -1},
+			type     : 'GET',
+			dataType : 'jsonp',
+			error    : function(xqHXR,stat,err) { callback(stat) },
+			success  : function(res) {
+				if (res.responseDetails)
+					return console.log(res.responseDetails)
 
-					// other defaults
-					// default to filename if title is not given
-					if (!manifest[i].title) manifest[i].title = manifest[i].src.match(/([^\/]+)\.[^.]+$/)[1]
+				var entries = res.responseData.feed.entries
+				var roster = []
+				for (var i in entries)
+					roster[i] = {
+						title  : entries[i].title,
+						url    : entries[i].url,
+						html   : entries[i].content,
+						date   : entries[i].publishedDate,
+						author : entries[i].author,
+						type   : 'blog'
+					}
 
+				callback(roster)
+			}
+		})
+	}
+
+	// JSON manifest of markdown blog articles: array of ojects detailing
+	// src (rel. to manifest), title (optional), author (optional), date (optional)
+	parsers.blog = function(src,callback) {
+		$.ajax({
+			url: src,
+			success : function(blog) {
+				var dir = src.replace(/[^\/]*$/,'')
+
+				var roster = []
+
+				for (var i in blog) {
+					// paths relative to blog
+					blog[i].src = dir + blog[i].src
+
+					// set a callback for each roster item pre-programmed to return that particular item using a
+					// closure to fix reference problems http://stackoverflow.com/questions/2900839/how-to-structure-javascript-callback-so-that-function-scope-is-maintained-proper
+					roster[i] = (function(src){
+						return function(callback) {
+							parsers.markdown(src,function(roster) {
+								roster[0].type = 'blog'
+
+								// other defaults
+								// default to filename if title is not given
+								if (!roster[0].title)
+									roster[0].title = src.match(/([^\/]+)\.[^.]+$/)[1]
+
+								callback(roster[0])
+							})
+						}
+					})(blog[i].src)
 				}
-				// render and discard first manifest object
-				// and render next post if first is in in view
-				render(manifest.shift(),art)
+
+				callback(roster)
 			},
-			error : function () {
-				art.text('Error loading manifest')
-			},
+			error    : function(xqHXR,stat,err) { callback(stat) },
 			dataType : 'json'
 		})
-}
 
-// conditionally extend the article (add more posts)
-// for infinite scroll. Poll the function
-function addPosts() {
-	// a section in view?
-	if (!$('section:visible').length) return
-	// test if last post has finished or not
-	if ($('section').last().data('loading') ) return
-
-	// test if last article is in view
-	if ($(window).scrollTop() > $('section').last().offset().top - $(window).height() ) {
-		var art  = $('nav a.active').data('article')
-		if (!art.data('manifest')) return
-		var meta = art.data('manifest').shift()
-
-		// no moar articles?
-		if (!meta) return
-
-		render(meta,art)
-	}
-}
-
-// render a section onto an article
-// replacing a loading gif with the article
-function render(meta,article) {
-	// defaults
-	if (!meta.type && meta.src)
-		if (meta.src.match('\.md$') )
-			meta.type = 'markdown'
-		else if (meta.src.match('\.html$') )
-			meta.type = 'html'
-
-	// external HTML fragment, markdown
-	if ( meta.src ){
-		// section onto article
-		var section = $('<section />').appendTo(article).data('loading',true)
-		// apply loading gif to each external external article prior to load.
-		section.html('<div class="throbber"></div>')
-
-		if (meta.type.match('rss|atom') )
-			$.getFeed({
-				url: meta.src,
-				error:function(){
-					section.text('Error retreiving feed')
-				},
-				success:function(feed){
-					var html = feed2html(feed)
-					section.html(html)
-					section.data('loading',false)
-				}
-			})
-		else
-			$.ajax({
-				url: meta.src,
-				error:function(){
-					section.text('Error retrieving article')
-				},
-				dataType: 'html',
-				success: function(html) {
-					if (meta.type == 'markdown')
-						html = converter.makeHtml(html)
-
-					section.html(html).addClass(meta.type)
-					var h1 = $('<h1 />').prependTo(section)
-						.text(meta.title)
-
-					if (meta.title)
-						section.append('<hr />')
-
-					if (meta.date)
-						$('<time />').attr('datetime', meta.date)
-							.text( relativeDate( new Date(meta.date) ) )
-							.appendTo(h1)
-
-					if (meta.author)
-						$('<span />').addClass('note')
-							.text(' by ').append(meta.author)
-							.appendTo(h1)
-
-					// syntax highlighting
-					$('pre code',section).each(function(i, e) {hljs.highlightBlock(e)})
-
-					section.data('loading',false)
-				}
-			})
 	}
 
-	// syntax highlighting of inline articles
-	$('pre code',section).each(function(i, e) {hljs.highlightBlock(e)})
-
-	return section
-
-}
-
-
-// given a string rss it must return some html...
-function feed2html(feed){
-	var html = $('<div class="rss"></div>')
-
-	for (var i in feed.items){
-		var post = $('<div class="container_12 post"><div class="grid_10 prefix_1 suffix_1 meta"></div><div class="content grid_10 prefix_1 suffix_1"></div></div>')
-		$('.meta',post).append('<h1><a href="'+feed.items[i].link+'">'+feed.items[i].title+'</a></h1>')
-
-		var date = feed.items[i].updated
-		var h1 = $('.meta h1',post)
-
-		$('<time />').attr('datetime', date)
-			.text( relativeDate( new Date(date) ) )
-			.appendTo(h1)
-
-		$('.meta',post).append('<div class="ref">'+feed.items[i].link.replace(/http:\/\//,'').match(/[a-z0-9\.]+/i)+'</div>')
-
-		$('.content',post).append(feed.items[i].description)
-
-
-		html.append(post).append('<hr />')
-	}
-
-	return html
-}
-
-// every minute, update relative dates
-setInterval( function() {
-	$('time[datetime]').each(function(){
-		var absdate = new Date( $(this).attr('datetime') )
-		$(this).text( relativeDate(absdate) )
-	})
-} ,30000)
-
-// Copyright Callan Bryant 2011-2012 <callan.bryant@gmail.com> http://callanbryant.co.uk
-// All rights reserved.
-
-// from https://github.com/azer/relative-date/blob/master/lib/relative-date.js
-var relativeDate = (function(undefined){
-
-  var SECOND = 1000,
-      MINUTE = 60 * SECOND,
-      HOUR = 60 * MINUTE,
-      DAY = 24 * HOUR,
-      WEEK = 7 * DAY,
-      YEAR = DAY * 365,
-      MONTH = YEAR / 12;
-
-  var formats = [
-    [ 0.7 * MINUTE, 'just now' ],
-    [ 1.5 * MINUTE, 'a minute ago' ],
-    [ 60 * MINUTE, 'minutes ago', MINUTE ],
-    [ 1.5 * HOUR, 'an hour ago' ],
-    [ DAY, 'hours ago', HOUR ],
-    [ 2 * DAY, 'yesterday' ],
-    [ 7 * DAY, 'days ago', DAY ],
-    [ 1.5 * WEEK, 'a week ago'],
-    [ MONTH, 'weeks ago', WEEK ],
-    [ 1.5 * MONTH, 'a month ago' ],
-    [ YEAR, 'months ago', MONTH ],
-    [ 1.5 * YEAR, 'a year ago' ],
-    [ Number.MAX_VALUE, 'years ago', YEAR ]
-  ];
-
-  function relativeDate(input,reference){
-    !reference && ( reference = (new Date).getTime() );
-    reference instanceof Date && ( reference = reference.getTime() );
-    input instanceof Date && ( input = input.getTime() );
-
-    var delta = reference - input,
-        format, i, len;
-
-    for(i = -1, len=formats.length; ++i < len; ){
-      format = formats[i];
-      if(delta < format[0]){
-        return format[2] == undefined ? format[1] : Math.round(delta/format[2]) + ' ' + format[1];
-      }
-    };
-  }
-
-  return relativeDate;
-
-})()
-
-if(typeof module != 'undefined' && module.exports){
-  module.exports = relativeDate
-}
-
-function animations() {
-	$('#backdrop > img').hide().bind("load",function(){
-		$(this).fadeIn(3500)
-		// now is a good time to preload any articles
-		preloadArticles()
-	})
-
-	$('article .logos img').css('opacity',0).load(function(){
-		$(this).fadeTo('fast',0.7)
-	})
-
-	$('#contact').hide()
-
-	var hideQuote = function(){
-		$('#logo .quote').stop().fadeOut()
-		$('#logo h1').stop().animate({'margin-top':'50px'})
-	}
-
-	setTimeout(function(){
-		hideQuote()
-		$('#logo').bind('mouseleave',hideQuote)
-	},4000)
-
-	$('#logo').bind('mouseenter',function(){
-		$('#logo .quote').stop().fadeIn()
-		$('#logo h1').stop().animate({'margin-top':'26px'})
-	})
-
-
-
-	var contactTimeout = setTimeout(function(){
-		$('#contact').hide().fadeIn()
-	},6000)
-
-	$(window).one('scroll',function(){
-		clearTimeout(contactTimeout)
-		$('#contact').fadeIn()
-	})
-
-
-	// IE9 hack
-	// the load event does not always fire due to caching,
-	// so trigger it manually...
-	if($.browser.msie && parseInt($.browser.version) >= 9 )
-		setTimeout(function(){
-			$('img').trigger('load')
-		},3000)
-
-
-}
-
-// map hotkeys
-function hotkeys(){
-	// left/right select service
-	$(document).bind('keydown',"right",function(){
-		// check to see if a service has been active
-		if (!$('.service').hasClass('active'))
-			var next = $('.service').first()
-		else
-			var next = $('.active').next()
-
-		next.each(showThisArticle)
-	})
-	$(document).bind('keydown',"left",function(){
-	// check to see if a service has been active
-		if (!$('.service').hasClass('active'))
-			var next = $('.service').first()
-		else
-			var next = $('.active').prev()
-
-		next.each(showThisArticle)
-	})
-
-	// enter to go to the URL of the active service
-	$(document).bind('keyup','return',function(){
-		$('nav a.active').each(function(){
-			// restore postion
-			$('.active').css('top',0)
-			// do something else using active nav link or attachedarticle
+	parsers.raw = parsers.html = function(src,callback) {
+		$.ajax({
+			url      : src,
+			dataType : 'html',
+			error    : function(xqHXR,stat,err) { callback(stat) },
+			success  : function(res) {
+				callback([{ html: res }])
+			}
 		})
-	}).bind('keydown','return',function(){
-		$('.active').css('position','relative').css('top','2px')
+	}
+
+	parsers.markdown = function(src,callback) {
+		parsers.raw(src,function(roster){
+			// convert markdown to HTML
+			roster[0].html = md.makeHtml(roster[0].html)
+
+			// TODO convert relative links to that of URL  (via this.dir is multi-instantiation is used)
+
+			callback(roster)
+		})
+	}
+
+	// renderer. Given an item from a renderer and a jQuery DOM object to append to.
+	// When engine is instantited (DOM must be ready) infinite scrolling is handled.
+	// expects one item from the array. Can be object or callback defering object.
+	var render = this.render = function() {
+		busy = true
+		var section = $('<section />').appendTo(options.target)
+
+		var load = roster.shift()
+
+		// convert item into callback
+		if (typeof load == 'object') {
+			// IMMEDIATE RENDERING
+			// load is actually an item
+			var item = load
+			var load = function(callback){
+				callback(item)
+			}
+		} else
+			// DEFERRED RENDERING
+			// section onto targer
+			// apply loading gif which will be replaced with this item
+			section.html('<div class="throbber"></div>')
+
+
+		// load the item
+		load(function(item) {
+			section.html(item.html).addClass(item.type)
+			var h1 = $('<h1 />').prependTo(section)
+				.text(item.title)
+
+			if (item.title)
+				section.append('<hr />')
+
+			if (item.date)
+				$('<time />').attr('datetime', item.date)
+					.text( relativeDate( new Date(item.date) ) )
+					.appendTo(h1)
+
+			if (item.author)
+				$('<span />').addClass('note')
+					.text(' by ').append(item.author)
+					.appendTo(h1)
+
+			// syntax highlighting
+			$('pre code',section).each(function(i, e) {hljs.highlightBlock(e)})
+
+			busy = false
+		})
+	}
+
+
+	this.evaluate = function(items) {
+		// test if last post has finished loading and initial parse has run
+		if (busy || !ready) return
+
+		// must be visible (eg, another tab might be selected)
+		if (!$('section:visible',options.target).length) return
+
+		// no more to render? disable infinite scrolling.
+		if (roster.length == 0)
+			return //$(window).unbind('scroll',this)
+
+		// test if last article is in view
+		if ($(window).scrollTop() > $('section',options.target).last().offset().top - $(window).height() ) {
+			render()
+		}
+	}
+
+
+	// will continue to render more items if appropriate
+	// a previous article must be visible and loaded first
+	// initialise infinite scroll event handlers
+	$(window).scroll(this.evaluate)
+
+	// every minute, update relative dates
+	setInterval( function() {
+		$('time[datetime]',options.target).each(function(){
+			var absdate = new Date( $(this).attr('datetime') )
+			$(this).text( relativeDate(absdate) )
+		})
+	} ,30000)
+
+
+	parsers[options.type](options.src,function(items){
+		roster = items
+
+		// render one item
+		render()
+		ready = true
 	})
+
+
 }
