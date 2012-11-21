@@ -142,7 +142,10 @@ function engine(options) {
 	// When engine is instantited (DOM must be ready) infinite scrolling is handled.
 	// expects one item from the array. Can be object or callback defering object.
 	var render = this.render = function() {
+		if (!roster.length) return
+
 		busy = true
+
 		var section = $('<section />').appendTo(options.target)
 
 		var load = roster.shift()
