@@ -12,7 +12,7 @@ closure-compiler \
 	--js src/engine.js \
 	--js src/client.js \
 	--js src/highlight.pack.js \
-	--js_output_file build.js  --compilation_level WHITESPACE_ONLY
+	--js_output_file build.js  # --compilation_level WHITESPACE_ONLY
 
 exit
 
