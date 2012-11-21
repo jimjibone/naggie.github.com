@@ -233,20 +233,3 @@ function engine(options) {
 
 
 }
-
-setTimeout(function() {
-	//var f = new engine()
-	//f.parsers.rss('http://www.google.com/reader/public/atom/user%2F15749961360086107608%2Fstate%2Fcom.google%2Fstarred',function(roster){
-	var f = new engine({
-		src : 'blog/manifest.json',
-		target: $('nav a.active').data('article').empty()
-	})
-},1000)
-
-/*
-var f = new engine()
-f.parsers.markdown('/blog/Single%20window%20Gimp%202.8%20on%20Mac%20OS%20X.md',function(i) {
-	var target = $('nav a.active').data('article').empty()
-	f.render(i[0],target)
-})
-*/
