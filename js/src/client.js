@@ -93,7 +93,7 @@ function initArticle(art){
 
 	// set flag so function is not called again
 	art.data('ready',true)
-
+/*
 	if (art.data('type') !== 'manifest')
 		render({
 			title : undefined,
@@ -124,6 +124,7 @@ function initArticle(art){
 			},
 			dataType : 'json'
 		})
+	*/
 }
 
 // conditionally extend the article (add more posts)
@@ -143,116 +144,9 @@ function addPosts() {
 		// no moar articles?
 		if (!meta) return
 
-		render(meta,art)
+		//render(meta,art)
 	}
 }
-
-// render a section onto an article
-// replacing a loading gif with the article
-function render(meta,article) {
-	// defaults
-	if (!meta.type && meta.src)
-		if (meta.src.match('\.md$') )
-			meta.type = 'markdown'
-		else if (meta.src.match('\.html$') )
-			meta.type = 'html'
-
-	// external HTML fragment, markdown
-	if ( meta.src ){
-		// section onto article
-		var section = $('<section />').appendTo(article).data('loading',true)
-		// apply loading gif to each external external article prior to load.
-		section.html('<div class="throbber"></div>')
-
-		if (meta.type.match('rss|atom') )
-			$.getFeed({
-				url: meta.src,
-				error:function(){
-					section.text('Error retreiving feed')
-				},
-				success:function(feed){
-					var html = feed2html(feed)
-					section.html(html)
-					section.data('loading',false)
-				}
-			})
-		else
-			$.ajax({
-				url: meta.src,
-				error:function(){
-					section.text('Error retrieving article')
-				},
-				dataType: 'html',
-				success: function(html) {
-					if (meta.type == 'markdown')
-						html = converter.makeHtml(html)
-
-					section.html(html).addClass(meta.type)
-					var h1 = $('<h1 />').prependTo(section)
-						.text(meta.title)
-
-					if (meta.title)
-						section.append('<hr />')
-
-					if (meta.date)
-						$('<time />').attr('datetime', meta.date)
-							.text( relativeDate( new Date(meta.date) ) )
-							.appendTo(h1)
-
-					if (meta.author)
-						$('<span />').addClass('note')
-							.text(' by ').append(meta.author)
-							.appendTo(h1)
-
-					// syntax highlighting
-					$('pre code',section).each(function(i, e) {hljs.highlightBlock(e)})
-
-					section.data('loading',false)
-				}
-			})
-	}
-
-	// syntax highlighting of inline articles
-	$('pre code',section).each(function(i, e) {hljs.highlightBlock(e)})
-
-	return section
-
-}
-
-
-// given a string rss it must return some html...
-function feed2html(feed){
-	var html = $('<div class="rss"></div>')
-
-	for (var i in feed.items){
-		var post = $('<div class="container_12 post"><div class="grid_10 prefix_1 suffix_1 meta"></div><div class="content grid_10 prefix_1 suffix_1"></div></div>')
-		$('.meta',post).append('<h1><a href="'+feed.items[i].link+'">'+feed.items[i].title+'</a></h1>')
-
-		var date = feed.items[i].updated
-		var h1 = $('.meta h1',post)
-
-		$('<time />').attr('datetime', date)
-			.text( relativeDate( new Date(date) ) )
-			.appendTo(h1)
-
-		$('.meta',post).append('<div class="ref">'+feed.items[i].link.replace(/http:\/\//,'').match(/[a-z0-9\.]+/i)+'</div>')
-
-		$('.content',post).append(feed.items[i].description)
-
-
-		html.append(post).append('<hr />')
-	}
-
-	return html
-}
-
-// every minute, update relative dates
-setInterval( function() {
-	$('time[datetime]').each(function(){
-		var absdate = new Date( $(this).attr('datetime') )
-		$(this).text( relativeDate(absdate) )
-	})
-} ,30000)
 
 // Copyright Callan Bryant 2011-2012 <callan.bryant@gmail.com> http://callanbryant.co.uk
 // All rights reserved.

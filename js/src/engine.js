@@ -1,35 +1,32 @@
-// TODO: select a target on Instantiation?
-// This way infinite scrolling could be much more clever. And also only enable itself conditionally.
-// perhaps instantiate with URL?
-// or look for tagets with 'engine' class, for attached engine object with roster
-function engine() {
-
-	// initialise infinite scroll event handlers
-	// TODO: unbind on completion
-	//$(window).scroll(this.continue)
-
-	// showdown markdown parser
+// Copyright Callan Bryant 2011-2012 <callan.bryant@gmail.com> http://callanbryant.co.uk
+// All rights reserved.
+function engine(options) {
 	var md = new Showdown.converter()
 
-	// item to be rendered by renderer
-	var item = function() {
-		this.html = ''
-		this.loaded = false
+	// defaults
+	if (!options.type && options.src)
+		if (options.src.match('\.md$') )
+			options.type = 'markdown'
+		else if (options.src.match('\.html$') )
+			options.type = 'html'
+		else if (options.src.match('rss|atom$') )
+			options.type = 'rss'
+		else if (options.src.match(/manifest\.json$/) )
+			options.type = 'blog'
 
-		this.load = function(callback) {
+	if (!options.src)
+		return console.log('src required', options)
 
-		}
-	}
+	if (!options.target)
+		return console.log('target DOM element required', options)
+	else
+		// ensure jQuery
+		options.target = $(options.target)
 
-	// every minute, update relative dates (TODO: multi instance match current or global)
-	setInterval( function() {
-		$('time[datetime]').each(function(){
-			var absdate = new Date( $(this).attr('datetime') )
-			$(this).text( relativeDate(absdate) )
-		})
-	} ,30000)
+	var roster = []
 
-
+	// lock to render only one at a time during infinite scroll
+	var busy = false
 
 	// PARSERS, GIVEN A URL, MUST RETURN AN ARRAY OF OBJECTS TO THE GIVEN CALLBACK:
 	//
@@ -45,10 +42,10 @@ function engine() {
 	// Problem? call back with (false,error)
 	// given src, relative dir
 	// OR CALLBACK RETURNING ITEM FOR DEFERRED RENDERING
-	var parsers = this.parsers = {}
+	var parsers = {}
 
 	// use the google RSS->JSONP feed API to get an RSS feed cross-domain
-	this.parsers.rss = this.parsers.rss = function(src,callback) {
+	parsers.rss = function(src,callback) {
 		$.ajax({
 			url      : 'https://ajax.googleapis.com/ajax/services/feed/load',
 			data     : { v:'1.0', q: src , num: -1},
@@ -75,7 +72,7 @@ function engine() {
 
 	// JSON manifest of markdown blog articles: array of ojects detailing
 	// src (rel. to manifest), title (optional), author (optional), date (optional)
-	this.parsers.blog = function(src,callback) {
+	parsers.blog = function(src,callback) {
 		$.ajax({
 			url: src,
 			success : function(blog) {
@@ -113,7 +110,7 @@ function engine() {
 
 	}
 
-	this.parsers.raw = function(src,callback) {
+	parsers.raw = function(src,callback) {
 		$.ajax({
 			url      : src,
 			dataType : 'html',
@@ -124,7 +121,7 @@ function engine() {
 		})
 	}
 
-	this.parsers.markdown = function(src,callback) {
+	parsers.markdown = function(src,callback) {
 		parsers.raw(src,function(roster){
 			// convert markdown to HTML
 			roster[0].html = converter.makeHtml(roster[0].html)
@@ -135,14 +132,15 @@ function engine() {
 		})
 	}
 
-	this.parsers.html = this.parsers.raw
+	parsers.html = parsers.raw
 
 	// renderer. Given an item from a renderer and a jQuery DOM object to append to.
 	// When engine is instantited (DOM must be ready) infinite scrolling is handled.
 	// expects one item from the array. Can be object or callback defering object.
-	this.render = function(load,target) {
+	var render = this.render = function() {
+		var section = $('<section />').appendTo(options.target).data('loading',true)
 
-		var section = $('<section />').appendTo(target).data('loading',true)
+		var load = roster.shift()
 
 		// convert item into callback
 		if (typeof load == 'object') {
@@ -160,7 +158,7 @@ function engine() {
 
 
 		// load the item
-		load(function(item){
+		load(function(item) {
 			section.html(item.html).addClass(item.type)
 			var h1 = $('<h1 />').prependTo(section)
 				.text(item.title)
@@ -211,17 +209,39 @@ function engine() {
 
 */
 	}
+
+
+	// initialise infinite scroll event handlers
+	// TODO: unbind on completion when roster.length
+	//$(window).scroll(this.continue)
+
+	// every minute, update relative dates
+	setInterval( function() {
+		$('time[datetime]',options.target).each(function(){
+			var absdate = new Date( $(this).attr('datetime') )
+			$(this).text( relativeDate(absdate) )
+		})
+	} ,30000)
+
+
+	parsers[options.type](options.src,function(items){
+		roster = items
+
+		// render one item
+		render()
+	})
+
+
 }
 
-
-var f = new engine()
-//f.parsers.rss('http://www.google.com/reader/public/atom/user%2F15749961360086107608%2Fstate%2Fcom.google%2Fstarred',function(roster){
-f.parsers.blog('blog/manifest.json',function(roster,err,stat){
-	var target = $('nav a.active').data('article').empty()
-	for (var i in roster)
-		f.render(roster[i],target)
-})
-
+setTimeout(function() {
+	//var f = new engine()
+	//f.parsers.rss('http://www.google.com/reader/public/atom/user%2F15749961360086107608%2Fstate%2Fcom.google%2Fstarred',function(roster){
+	var f = new engine({
+		src : 'blog/manifest.json',
+		target: $('nav a.active').data('article').empty()
+	})
+},1000)
 
 /*
 var f = new engine()
