@@ -1,15 +1,10 @@
 // Copyright Callan Bryant 2011-2012 <callan.bryant@gmail.com> http://callanbryant.co.uk
 // All rights reserved.
 
-var converter = new Showdown.converter()
 $(function(){
 	generateNav()
-	animations()
+	animations() // also preloads when appropriate
 	hotkeys()
-
-	// infinite scrolling example
-	// calls many times. Article should set and test loading attribute
-	$(window).scroll(addPosts)
 })
 
 // create elements representing pages
@@ -24,7 +19,7 @@ function generateNav()
 		// safe URL hash for link
 		var hash = '#'+art.data('name').replace(/[^0-9a-z]+/gi,'-')
 
-		var link= $("<a />").addClass('service')
+		var link = $("<a />").addClass('service')
 		link.text(art.data('name'))
 		link.appendTo('nav')
 		link.click(showThisArticle)
@@ -33,7 +28,6 @@ function generateNav()
 			initArticle(art)
 		})
 
-		// attach reference to element so it can be shown later
 		link.data('article',art)
 
 		// attach link
@@ -73,10 +67,9 @@ function showThisArticle()
 
 	$('.articles header').html(  art.data('hint') )
 
-	// need to init?
+	// need to init? (automatic now)
 	//if ( !$(this).data('article').data('ready') )
 		initArticle(art)
-		addPosts() // only if appropriate
 }
 
 function preloadArticles(){
@@ -86,70 +79,19 @@ function preloadArticles(){
 }
 
 // initialise the article, given the mathing jQuery object
-function initArticle(art){
+function initArticle(art) {
 	// only want to call this once...
-	if (art.data('ready'))
-		return false
+	if (art.data('engine')) return false
 
-	// set flag so function is not called again
-	art.data('ready',true)
-/*
-	if (art.data('type') !== 'manifest')
-		render({
-			title : undefined,
-			type  : art.data('type'),
-			src   : art.data('src')
-		},art)
-	else
-		$.ajax({
-			url: art.data('src'),
-			success : function(manifest) {
-				dir = art.data('src').replace(/[^\/]*$/,'')
-				art.data('manifest',manifest)
-				for (var i in manifest) {
-					// paths relative to manifest
-					manifest[i].src = dir + manifest[i].src
+	// no need to process inline HTML
+	if (! art.data('src')) return false
 
-					// other defaults
-					// default to filename if title is not given
-					if (!manifest[i].title) manifest[i].title = manifest[i].src.match(/([^\/]+)\.[^.]+$/)[1]
-
-				}
-				// render and discard first manifest object
-				// and render next post if first is in in view
-				render(manifest.shift(),art)
-			},
-			error : function () {
-				art.text('Error loading manifest')
-			},
-			dataType : 'json'
-		})
-	*/
+	art.data('engine',new engine({
+		src    : art.data('src'),
+		target : art,
+		type   : art.data('type')
+	}))
 }
-
-// conditionally extend the article (add more posts)
-// for infinite scroll. Poll the function
-function addPosts() {
-	// a section in view?
-	if (!$('section:visible').length) return
-	// test if last post has finished or not
-	if ($('section').last().data('loading') ) return
-
-	// test if last article is in view
-	if ($(window).scrollTop() > $('section').last().offset().top - $(window).height() ) {
-		var art  = $('nav a.active').data('article')
-		if (!art.data('manifest')) return
-		var meta = art.data('manifest').shift()
-
-		// no moar articles?
-		if (!meta) return
-
-		//render(meta,art)
-	}
-}
-
-// Copyright Callan Bryant 2011-2012 <callan.bryant@gmail.com> http://callanbryant.co.uk
-// All rights reserved.
 
 function animations() {
 	$('#backdrop > img').hide().bind("load",function(){
@@ -235,3 +177,6 @@ function hotkeys(){
 		$('.active').css('position','relative').css('top','2px')
 	})
 }
+
+// Copyright Callan Bryant 2011-2012 <callan.bryant@gmail.com> http://callanbryant.co.uk
+// All rights reserved.

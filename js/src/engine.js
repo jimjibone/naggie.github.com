@@ -23,6 +23,8 @@ function engine(options) {
 		// ensure jQuery
 		options.target = $(options.target)
 
+	this.target = options.target
+
 	var roster = []
 
 	// lock to render only one at a time during infinite scroll
@@ -46,7 +48,7 @@ function engine(options) {
 	var parsers = {}
 
 	// use the google RSS->JSONP feed API to get an RSS feed cross-domain
-	parsers.rss = function(src,callback) {
+	parsers.rss = parsers.atom = function(src,callback) {
 		$.ajax({
 			url      : 'https://ajax.googleapis.com/ajax/services/feed/load',
 			data     : { v:'1.0', q: src , num: -1},
@@ -54,6 +56,9 @@ function engine(options) {
 			dataType : 'jsonp',
 			error    : function(xqHXR,stat,err) { callback(stat) },
 			success  : function(res) {
+				if (res.responseDetails)
+					return console.log(res.responseDetails)
+
 				var entries = res.responseData.feed.entries
 				var roster = []
 				for (var i in entries)
@@ -111,7 +116,7 @@ function engine(options) {
 
 	}
 
-	parsers.raw = function(src,callback) {
+	parsers.raw = parsers.html = function(src,callback) {
 		$.ajax({
 			url      : src,
 			dataType : 'html',
@@ -125,15 +130,13 @@ function engine(options) {
 	parsers.markdown = function(src,callback) {
 		parsers.raw(src,function(roster){
 			// convert markdown to HTML
-			roster[0].html = converter.makeHtml(roster[0].html)
+			roster[0].html = md.makeHtml(roster[0].html)
 
 			// TODO convert relative links to that of URL  (via this.dir is multi-instantiation is used)
 
 			callback(roster)
 		})
 	}
-
-	parsers.html = parsers.raw
 
 	// renderer. Given an item from a renderer and a jQuery DOM object to append to.
 	// When engine is instantited (DOM must be ready) infinite scrolling is handled.
@@ -228,10 +231,3 @@ function engine(options) {
 
 
 }
-
-setTimeout(function(){
-	new engine({
-		target: $('nav a.active').data('article').empty(),
-		src: 'blog/manifest.json'
-	})
-},2000)
