@@ -26,7 +26,8 @@ function engine(options) {
 	var roster = []
 
 	// lock to render only one at a time during infinite scroll
-	var busy = false
+	var busy  = false
+	var ready = false
 
 	// PARSERS, GIVEN A URL, MUST RETURN AN ARRAY OF OBJECTS TO THE GIVEN CALLBACK:
 	//
@@ -138,7 +139,8 @@ function engine(options) {
 	// When engine is instantited (DOM must be ready) infinite scrolling is handled.
 	// expects one item from the array. Can be object or callback defering object.
 	var render = this.render = function() {
-		var section = $('<section />').appendTo(options.target).data('loading',true)
+		busy = true
+		var section = $('<section />').appendTo(options.target)
 
 		var load = roster.shift()
 
@@ -179,41 +181,33 @@ function engine(options) {
 			// syntax highlighting
 			$('pre code',section).each(function(i, e) {hljs.highlightBlock(e)})
 
-			section.data('loading',false)
+			busy = false
 		})
 	}
 
-	// will continue to render more items if appropriate
-	// a previous article must be visible and loaded first
-	// expects one item from the array.
-	// Looks for section parents
-	// TODO: or known targets
-	this.evaluate = function(items) {
 
-/*
-		if (!$('section:visible').length) return
-		// test if last post has finished or not
-		if ($('section').last().data('loading') ) return
+	this.evaluate = function(items) {
+		// test if last post has finished loading and initial parse has run
+		if (busy || !ready) return
+
+		// must be visible (eg, another tab might be selected)
+		if (!$('section:visible',options.target).length) return
+
+		// no more to render? disable infinite scrolling.
+		if (roster.length == 0)
+			return //$(window).unbind('scroll',this)
 
 		// test if last article is in view
-		if ($(window).scrollTop() > $('section').last().offset().top - $(window).height() ) {
-			var art  = $('nav a.active').data('article')
-			if (!art.data('blog')) return
-			var meta = art.data('blog').shift()
-
-			// no moar articles?
-			if (!meta) return
-
-			render(meta,art)
+		if ($(window).scrollTop() > $('section',options.target).last().offset().top - $(window).height() ) {
+			render()
 		}
-
-*/
 	}
 
 
+	// will continue to render more items if appropriate
+	// a previous article must be visible and loaded first
 	// initialise infinite scroll event handlers
-	// TODO: unbind on completion when roster.length
-	//$(window).scroll(this.continue)
+	$(window).scroll(this.evaluate)
 
 	// every minute, update relative dates
 	setInterval( function() {
@@ -229,7 +223,15 @@ function engine(options) {
 
 		// render one item
 		render()
+		ready = true
 	})
 
 
 }
+
+setTimeout(function(){
+	new engine({
+		target: $('nav a.active').data('article').empty(),
+		src: 'blog/manifest.json'
+	})
+},2000)
