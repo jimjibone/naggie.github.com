@@ -8,9 +8,24 @@ function added {
 }
 
 
-# returns date a file was added to the repo, in a format JS can understand
+# returns date a file was added to the repo, in unix time
+function addedStamp {
+	git log --pretty=format:"%at" "$*" | tail -n1
+}
+
+# returns original author of file
 function author {
 	git log --pretty=format:"%an" "$*" | tail -n1
+}
+
+# list files by date added to repository (newest first)
+function lsChrono {
+	(
+		ls "$@" | while read SRC; do
+			addedStamp $SRC
+			echo  " $SRC"
+		done
+	) | sort -nr | cut -c12-
 }
 
 cd $(dirname $0)
@@ -19,7 +34,7 @@ cd $(dirname $0)
 # remove trailing delimiter
 (
 	echo -ne [
-		ls *.md | while read SRC; do
+		lsChrono *.md | while read SRC; do
 			echo '{'
 				echo -ne '"src":"'
 					echo -ne $SRC
