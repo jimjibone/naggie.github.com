@@ -92,20 +92,25 @@ function engine(options) {
 
 					// set a callback for each roster item pre-programmed to return that particular item using a
 					// closure to fix reference problems http://stackoverflow.com/questions/2900839/how-to-structure-javascript-callback-so-that-function-scope-is-maintained-proper
-					roster[i] = (function(src){
+					roster[i] = (function(meta){
 						return function(callback) {
-							parsers.markdown(src,function(roster) {
+							parsers.markdown(meta.src,function(roster) {
 								roster[0].type = 'blog'
 
 								// other defaults
 								// default to filename if title is not given
-								if (!roster[0].title)
-									roster[0].title = src.match(/([^\/]+)\.[^.]+$/)[1]
+								if (!meta.title)
+									roster[0].title = meta.src.match(/([^\/]+)\.[^.]+$/)[1]
+								else
+									roster[0].title = meta.title
+
+								roster[0].date   = meta.date
+								roster[0].author = meta.author
 
 								callback(roster[0])
 							})
 						}
-					})(blog[i].src)
+					})(blog[i])
 				}
 
 				callback(roster)
