@@ -36,15 +36,15 @@ cd $(dirname $0)
 	echo -ne [
 		lsChrono *.md | while read SRC; do
 			echo '{'
-				echo -ne '"src":"'
+				echo -ne '\t"src"    : "'
 					echo -ne $SRC
 				echo  '",'
 
-				echo -ne '"date":"'
+				echo -ne '\t"date"   : "'
 					added $SRC
 				echo  '",'
 
-				echo -ne '"author":"'
+				echo -ne '\t"author" : "'
 					author $SRC
 				echo  '"'
 			echo -ne '},'
