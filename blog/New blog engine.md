@@ -14,5 +14,5 @@ It is still in an early stage and [lots is planned!][1]
 
 [The source][2] is available at github.
 
-[1]: https://github.com/naggie/callanbryant.co.uk/issues?state=open
-[2]: http://github.com/naggie/callanbryant.co.uk/
+[1]: https://github.com/naggie/naggie.github.com/issues?state=open
+[2]: http://github.com/naggie/naggie.github.com/
