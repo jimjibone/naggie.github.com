@@ -180,7 +180,7 @@ function engine(options) {
 				section.append('<hr />')
 
 			if (item.url) {
-				var a = $('a').attr('href',item.url)
+				var a = $('<a />').attr('href',item.url)
 				h1.wrapInner(a)
 			}
 
