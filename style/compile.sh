@@ -17,7 +17,10 @@ cat \
 	src/style.css \
 	> $TMPFILE
 
-csscrush -f $TMPFILE -o build.css
-
+if [ ! $DEBUG ]; then
+	csscrush -f $TMPFILE -o build.css
+else
+	cp $TMPFILE build.css
+fi
 
 rm $TMPFILE
