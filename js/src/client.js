@@ -33,6 +33,12 @@ function generateNav()
 		// attach link
 		link.attr('href',hash)
 
+		// download associated file (linked later)
+		// set default to feed if type is RSS
+		if (!art.data('download') && art.data('type') )
+			if ( art.data('type').match(/rss|atom/) )
+				art.data('download', art.data('src') )
+
 		// title (to be made nice with bootstrap tooltips or tipsy)
 		link.attr('title', art.data('hint') )
 
@@ -172,6 +178,9 @@ function hotkeys(){
 			// restore postion
 			$('.active').css('top',0)
 			// do something else using active nav link or attachedarticle
+			var art = $(this).data('article')
+			if(art.data('download'))
+				window.open(art.data('download'))
 		})
 	}).bind('keydown','return',function(){
 		$('.active').css('position','relative').css('top','2px')
