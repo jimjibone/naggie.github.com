@@ -64,7 +64,7 @@ function engine(options) {
 				for (var i in entries)
 					roster[i] = {
 						title  : entries[i].title,
-						url    : entries[i].url,
+						url    : entries[i].link,
 						html   : entries[i].content,
 						date   : entries[i].publishedDate,
 						author : entries[i].author,
@@ -178,6 +178,11 @@ function engine(options) {
 
 			if (item.title)
 				section.append('<hr />')
+
+			if (item.url) {
+				var a = $('a').attr('href',item.url)
+				h1.wrapInner(a)
+			}
 
 			if (item.date)
 				$('<time />').attr('datetime', item.date)
