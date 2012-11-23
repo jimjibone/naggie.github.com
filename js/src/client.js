@@ -2,8 +2,8 @@
 // All rights reserved.
 
 $(function(){
-	generateNav()
 	animations() // also preloads when appropriate
+	generateNav()
 	hotkeys()
 })
 
@@ -100,6 +100,12 @@ function initArticle(art) {
 }
 
 function animations() {
+
+	// apply loading gif to each external external article prior to load.
+	// even though the section renderer does this anyway, it effectively
+	// preloads the throbber
+	$('article[data-src]').html('<div class="throbber"></div>')
+
 	$('#backdrop > img').hide().bind("load",function(){
 		$(this).fadeIn(3500)
 		// now is a good time to preload any articles

@@ -201,7 +201,7 @@ function engine(options) {
 		})
 	}
 
-
+	// decide wether to render (infinite scrolling)
 	this.evaluate = function(items) {
 		// test if last post has finished loading and initial parse has run
 		if (busy || !ready) return
@@ -209,7 +209,7 @@ function engine(options) {
 		// must be visible (eg, another tab might be selected)
 		if (!$('section:visible',options.target).length) return
 
-		// no more to render? disable infinite scrolling.
+		// no more to render? disable infinite scrolling. TODO
 		if (roster.length == 0)
 			return //$(window).unbind('scroll',this)
 
@@ -234,8 +234,13 @@ function engine(options) {
 	} ,30000)
 
 
+	// after initial load
 	parsers[options.type](options.src,function(items){
 		roster = items
+
+		// empty the render area (may be a problem later, if recursive manifests are enabled)
+		// because there may be a throbber or something there.
+		options.target.empty()
 
 		// render one item
 		render()
