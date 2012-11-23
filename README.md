@@ -10,21 +10,21 @@ Everything is under GPLv2 unless otherwise specified.
 
 Add `<article />` tags to create a new page linked on the nav bar. Set the following attributes:
 
-  * `data-name` : The article title (appears on nav bar)
-  * `data-hint` : short description (appears above article and button mouseover)
-  * `data-type` : markdown/html/rss/atom/manifest (from file extension by default)
-  * `data-src`  : URL to source file. Same origin policy applies.
+  * `data-name`     : The article title (appears on nav bar)
+  * `data-hint`     : short description (appears above article and button mouseover)
+  * `data-type`     : markdown/html/rss/atom/manifest (from file extension by default)
+  * `data-src`      : URL to source file. Same origin policy applies.
+  * `data-download` : Link to associated file. Defaults to RSS feed if any.
 
 # Manifest
 
 Use a manifest to specify multiple articles for one page. This is useful for a blog.
 
-Manifest parset expects a JSON (newest first) array of objects with the following attributes:
+Blog parser expects a JSON (newest first) array of objects with the following attributes:
 
-  * `src`    : **source URL of article. Required. Relative to directory of manifest file**
+  * `src`    : **source URL of markdown article. Required. Relative to directory of manifest file**
   * `date`   : **a date javascript can understand with Date() object. Optional but recommended.**
   * `title`  : Optional, defaults to filename from Source
   * `author` : Optional name
-  * `type`   : Optional (from file extension by default)
 
-  A manifest generator that uses git history is in development.
+The manifest is automatically generated using git history by `blog/generate.sh`
