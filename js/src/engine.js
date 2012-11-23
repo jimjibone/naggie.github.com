@@ -202,16 +202,17 @@ function engine(options) {
 	}
 
 	// decide wether to render (infinite scrolling)
-	this.evaluate = function(items) {
+	// a previous article must be visible and loaded first
+	var evaluate = this.evaluate = function(items) {
 		// test if last post has finished loading and initial parse has run
 		if (busy || !ready) return
 
 		// must be visible (eg, another tab might be selected)
 		if (!$('section:visible',options.target).length) return
 
-		// no more to render? disable infinite scrolling. TODO
+		// no more to render? disable infinite scrolling.
 		if (roster.length == 0)
-			return //$(window).unbind('scroll',this)
+			return $(window).unbind('scroll',evaluate)
 
 		// test if last article is in view
 		if ($(window).scrollTop() > $('section',options.target).last().offset().top - $(window).height() ) {
@@ -219,11 +220,6 @@ function engine(options) {
 		}
 	}
 
-
-	// will continue to render more items if appropriate
-	// a previous article must be visible and loaded first
-	// initialise infinite scroll event handlers
-	$(window).scroll(this.evaluate)
 
 	// every minute, update relative dates
 	setInterval( function() {
@@ -241,6 +237,9 @@ function engine(options) {
 		// empty the render area (may be a problem later, if recursive manifests are enabled)
 		// because there may be a throbber or something there.
 		options.target.empty()
+
+		// initialise infinite scroll event handlers (they unbind when finished)
+		$(window).scroll(evaluate)
 
 		// render one item
 		render()
