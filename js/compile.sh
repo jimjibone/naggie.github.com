@@ -5,6 +5,10 @@
 
 cd $(dirname "$0")
 
+
+LEVEL=SIMPLE_OPTIMIZATIONS
+#LEVEL=WHITESPACE_ONLY
+
 closure-compiler \
 	--js src/showdown.js \
 	--js src/jquery.hotkeys.js \
@@ -12,11 +16,11 @@ closure-compiler \
 	--js src/engine.js \
 	--js src/client.js \
 	--js src/highlight.pack.js \
-	--js_output_file build.js  # --compilation_level WHITESPACE_ONLY
+	--js_output_file build.js --compilation_level $LEVEL
 
 exit
 
-# debug mode
+# 'debug' mode
 (
 	cat src/showdown.js
 	cat src/jquery.hotkeys.js
