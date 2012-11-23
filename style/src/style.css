@@ -217,7 +217,7 @@ h3{font-size:110%;}
 .throbber{
 width:100%;
 height:64px;
-background:url('images/Ajax-loader.gif') no-repeat center center;
+background:url('../images/Ajax-loader.gif') no-repeat center center;
 }
 
 pre code{
