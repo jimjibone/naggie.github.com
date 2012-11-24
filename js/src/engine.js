@@ -181,7 +181,7 @@ function engine(options) {
 
 			if (item.url) {
 				var a = $('<a />').attr('href',item.url)
-				h1.wrapInner(a)
+				h1.wrapInner(a).append(' &raquo;')
 			}
 
 			if (item.date)
