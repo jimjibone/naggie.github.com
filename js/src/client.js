@@ -116,7 +116,7 @@ function animations() {
 		$(this).fadeTo('fast',0.7)
 	})
 
-	$('#contact').hide()
+	$('#contact,#backtotop').hide()
 
 	var hideQuote = function(){
 		$('#logo .quote').stop().fadeOut()
@@ -144,6 +144,18 @@ function animations() {
 		$('#contact').fadeIn()
 	})
 
+	var toTopIsVisible = false;
+	$(window).on('scroll',function(){
+		if ($(window).scrollTop() > 500) {
+			if (! toTopIsVisible)
+				$('#backtotop').stop().slideDown()
+			toTopIsVisible = true
+		} else {
+			if (toTopIsVisible)
+				$('#backtotop').stop().slideUp()
+			toTopIsVisible = false
+		}
+	})
 
 	// IE9 hack
 	// the load event does not always fire due to caching,
@@ -191,6 +203,13 @@ function hotkeys(){
 	}).bind('keydown','return',function(){
 		$('.active').css('position','relative').css('top','2px')
 	})
+
+	var toTop = function() {
+		$('body').animate({scrollTop:0})
+	}
+
+	$('#backtotop').click(toTop)
+	$(document).bind('keydown','t',toTop)
 }
 
 // Copyright Callan Bryant 2011-2012 <callan.bryant@gmail.com> http://callanbryant.co.uk
