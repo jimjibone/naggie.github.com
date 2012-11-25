@@ -14,7 +14,7 @@ TMPFILE=$(mktemp -t banana)
 cat \
 	src/solarized_light.css \
 	src/960_12_col.css \
-	src/style.css \
+	src/main.css \
 	> $TMPFILE
 
 if [ ! $DEBUG ]; then
