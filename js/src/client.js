@@ -148,11 +148,11 @@ function animations() {
 	$(window).on('scroll',function(){
 		if ($(window).scrollTop() > 500) {
 			if (! toTopIsVisible)
-				$('#backtotop').stop().slideDown()
+				$('#backtotop').stop().slideDown(200)
 			toTopIsVisible = true
 		} else {
 			if (toTopIsVisible)
-				$('#backtotop').stop().slideUp()
+				$('#backtotop').stop().slideUp(200)
 			toTopIsVisible = false
 		}
 	})
