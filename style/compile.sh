@@ -12,7 +12,7 @@ LEVEL=SIMPLE_OPTIMIZATIONS
 TMPFILE=$(mktemp -t banana)
 
 cat \
-	src/solarized_light.css \
+	src/solarized_dark.css \
 	src/960_12_col.css \
 	src/main.css \
 	> $TMPFILE
