@@ -16,9 +16,7 @@ Add `<article />` tags to create a new page linked on the nav bar. Set the follo
   * `data-src`      : URL to source file. Same origin policy applies.
   * `data-download` : Link to associated file. Defaults to RSS feed if any.
 
-# Manifest
-
-Use a manifest to specify multiple articles for one page. This is useful for a blog.
+# Blog
 
 Blog parser expects a JSON (newest first) array of objects with the following attributes:
 
