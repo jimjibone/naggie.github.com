@@ -1,0 +1,50 @@
+<html>
+	<head>
+	 <style>
+	 	body {
+			background:#032367;
+			text-align:center;
+			color:white;
+			font-size:20px;
+			margin-top:100px;
+		}
+		.invert	{
+			background: white;
+			color:#032367;
+		}
+	 </style>
+	 <script>
+	 	var state = 0
+		setInterval(function(){
+			state++
+			if (state == 3)
+				document.getElementById('msg').style.visibility = "hidden"
+			else if (state == 4) {
+				document.getElementById('msg').style.visibility = "visible"
+				state = 0
+			}
+		},250)
+
+		document.onkeydown = function(event) {
+			event.preventDefault();
+			document.location = '/'
+		}
+	 </script>
+	</head>
+	<body>
+		<pre id="msg">
+<span class="invert"> 404 PAGE NOT FOUND </span>
+<br />
+MOLTEN CORE WARNING
+<br />
+An operator error exception has occurred at FISSREAC0020093:09
+FISSREAC002007914 FISSREAC0020023:17 FISSREAC0020088:22
+neutron multiplication rate at spikevalue 9999999
+<br />
+Press any key to vent radiological emissions into atmosphere.
+Consult reactor core manual for instructions on proper reactor core maintenance and repair.
+<br />
+Press any key to continue.
+		</pre>
+	</body>
+</html>
