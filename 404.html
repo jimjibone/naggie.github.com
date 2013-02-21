@@ -25,7 +25,7 @@
 			}
 		},250)
 
-		document.onkeydown = function(event) {
+		document.onkeydown = document.onclick = function(event) {
 			event.preventDefault();
 			document.location = '/'
 		}
