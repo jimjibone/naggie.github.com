@@ -1,4 +1,4 @@
-// Copyright Callan Bryant 2011-2012 <callan.bryant@gmail.com> http://callanbryant.co.uk
+// Copyright Callan Bryant 2011-2013 <callan.bryant@gmail.com> http://callanbryant.co.uk
 // All rights reserved.
 function engine(options) {
 	var md = new Showdown.converter()
